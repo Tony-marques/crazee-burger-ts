@@ -1,12 +1,12 @@
 import "./App.css";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 function App() {
-
-    return (
-        <>
-            <p>Salut tony</p>
-        </>
-    );
+  return (
+    <>
+      <LoginPage />
+    </>
+  );
 }
 
 export default App;
