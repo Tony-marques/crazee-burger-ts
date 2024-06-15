@@ -14,21 +14,22 @@ const Logo = () => {
 export default Logo;
 
 const LogoStyled = styled.div`
-  border: 1px solid red;
-
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: fit-content;
+  /* justify-content: center; */
+  transform: scale(2.5);
+
   img {
-    width: 200px;
+    width: 80px;
+    margin: 0 5px;
+    object-fit: contain;
+    object-position: center;
   }
 
-  span{
+  span {
     font-family: "Amatic sc";
     font-weight: 700;
-    font-size: 110px;
+    font-size: 36px;
     color: ${theme.colors.primary};
   }
 `;
