@@ -1,14 +1,11 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "../../../theme";
-import NavBar from "./NavBar";
+import Container from "./Container";
 
 const OrderPage = () => {
-  const { name } = useParams();
-
   return (
     <OrderPageStyled>
-      <NavBar name={name} />
+      <Container />
     </OrderPageStyled>
   );
 };
@@ -16,6 +13,9 @@ const OrderPage = () => {
 export default OrderPage;
 
 const OrderPageStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${theme.colors.primary};
   height: 100vh;
 `;
