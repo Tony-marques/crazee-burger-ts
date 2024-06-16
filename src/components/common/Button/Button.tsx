@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { theme } from "../../../theme";
 
 type ButtonProps = {
-  Icon: JSX.Element;
+  Icon?: JSX.Element;
   label: string;
+  className?: string;
 };
 
-const Button = ({ Icon, label }: ButtonProps) => {
+const Button = ({ Icon, label, className }: ButtonProps) => {
   return (
-    <ButtonStyled>
+    <ButtonStyled className={className}>
       <span>{label}</span>
       {Icon && Icon}
     </ButtonStyled>
