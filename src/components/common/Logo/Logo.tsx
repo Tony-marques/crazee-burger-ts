@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { theme } from "../../../theme";
+import LOGO from "/assets/images/logo.png";
 
-const LOGO_PICTURE = "../../../../public/assets/images/logo.png";
-
-const Logo = () => {
+const Logo = ({ className }: { className: string }) => {
   return (
-    <LogoStyled>
+    <LogoStyled className={className}>
       <span>crazee</span>
-      <img src={LOGO_PICTURE} alt="" />
+      <img src={LOGO} alt="" />
       <span>burger</span>
     </LogoStyled>
   );
@@ -18,7 +17,6 @@ export default Logo;
 const LogoStyled = styled.div`
   display: flex;
   align-items: center;
-  transform: scale(2.5);
 
   img {
     width: 80px;

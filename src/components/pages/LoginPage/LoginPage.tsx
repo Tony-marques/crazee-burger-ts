@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 const LoginPage = () => {
   return (
     <LoginPageStyled>
-      <Logo />
+      <Logo className="transform" />
       <LoginForm />
     </LoginPageStyled>
   );
@@ -21,9 +21,13 @@ const LoginPageStyled = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  background: url("assets/images/burger-background.jpg") rgba(0, 0, 0, 0.7);
+  background: url("/assets/images/burger-background.jpg") rgba(0, 0, 0, 0.7);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-blend-mode: darken;
+
+  .transform {
+    transform: scale(2.5);
+  }
 `;

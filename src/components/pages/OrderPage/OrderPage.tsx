@@ -1,19 +1,21 @@
-import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { theme } from "../../../theme";
+import Container from "./Container";
 
 const OrderPage = () => {
-  const { name } = useParams();
-  const navigate = useNavigate();
-
-  const handleOnClick = () => {
-    navigate("/");
-  };
-
   return (
-    <div>
-      <h1>Bonjour {name}</h1>
-      <button onClick={handleOnClick}>Déconnexion</button>
-    </div>
+    <OrderPageStyled>
+      <Container />
+    </OrderPageStyled>
   );
 };
 
 export default OrderPage;
+
+const OrderPageStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${theme.colors.primary};
+  height: 100vh;
+`;
