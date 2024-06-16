@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 const LoginPage = () => {
   return (
     <LoginPageStyled>
-      <Logo />
+      <Logo className="transform" />
       <LoginForm />
     </LoginPageStyled>
   );
@@ -26,4 +26,8 @@ const LoginPageStyled = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-blend-mode: darken;
+
+  .transform {
+    transform: scale(2.5);
+  }
 `;
