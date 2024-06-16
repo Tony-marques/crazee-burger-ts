@@ -18,7 +18,7 @@ export default Container;
 
 const ContainerStyled = styled.div`
   width: 1400px;
-  height: 90%;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   border-radius: 15px;

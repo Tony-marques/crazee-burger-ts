@@ -34,7 +34,8 @@ const NavBarStyled = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 27px 20px;
+  height: 10vh;
+  padding: 0 20px;
   background-color: ${theme.colors.white};
 
   .transform {
@@ -46,6 +47,7 @@ const NavBarStyled = styled.nav`
     align-items: center;
     gap: 10px;
     font-family: "Open Sans", sans-serif;
+    margin-right: 50px;
 
     .left {
       text-align: right;
@@ -65,6 +67,10 @@ const NavBarStyled = styled.nav`
         border: none;
         outline: none;
         cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
 
