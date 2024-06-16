@@ -23,7 +23,7 @@ const ButtonStyled = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${theme.colors.primary_burger};
+  background-color: ${theme.colors.primary};
   border: 1px solid transparent;
   cursor: pointer;
   border-radius: ${theme.borderRadius.round};
