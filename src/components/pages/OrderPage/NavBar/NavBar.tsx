@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PiUserCircleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import { theme } from "../../../../theme";
 import Logo from "../../../common/Logo/Logo";
@@ -16,6 +17,8 @@ const NavBar = ({ name }: { name: string | undefined }) => {
 
   const handleToggleButton = () => {
     setIsChecked((prev) => !prev);
+    if (!isChecked) toast.info("Mode admin activé");
+
   };
 
   return (
