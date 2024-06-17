@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { PiUserCircleFill } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { theme } from "../../../../theme";
-import ToggleButton from "./ToggleButton";
+import UserProfil from "./UserProfil";
+import ToggleButton from "../../../common/ToggleButton";
 
 type RightNavProps = {
   name?: string;
@@ -12,35 +11,21 @@ type RightNavProps = {
 
 const RightNav = ({ name }: RightNavProps) => {
   const [isChecked, setIsChecked] = useState(false);
-  const navigate = useNavigate();
-
-  const handleOnClick = () => {
-    navigate("/", { replace: true });
-  };
 
   const handleToggleButton = () => {
     setIsChecked((prev) => !prev);
     if (!isChecked) toast.info("Mode admin activé");
   };
+
   return (
     <RightNavStyled>
       <ToggleButton
+        onToggle={handleToggleButton}
         isChecked={isChecked}
         labelIfUnchecked="ACTIVER LE MODE ADMIN"
         labelIfChecked="DÉSACTIVER LE MODE ADMIN"
-        onToggle={handleToggleButton}
       />
-      <div className="user">
-        <div className="left">
-          <p>
-            Hey, <span>{name}</span>
-          </p>
-          <button onClick={handleOnClick}>Se déconnecter</button>
-        </div>
-        <div className="right">
-          <PiUserCircleFill />
-        </div>
-      </div>
+      <UserProfil name={name} />
     </RightNavStyled>
   );
 };
