@@ -79,7 +79,7 @@ const NavBarStyled = styled.nav`
       justify-content: center;
       svg {
         color: ${theme.colors.greyBlue};
-        font-size: ${theme.fonts.P4};
+        font-size: ${theme.fonts.size.P4};
       }
     }
   }

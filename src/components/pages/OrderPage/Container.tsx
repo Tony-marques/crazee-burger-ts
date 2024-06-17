@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Main from "./Main";
+import Main from "./Main/Main";
 import NavBar from "./NavBar";
 
 const Container = () => {

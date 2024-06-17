@@ -54,17 +54,17 @@ const LoginFormStyled = styled.form`
   h1,
   h2 {
     font-family: "Amatic SC";
-    font-weight: ${theme.weights.bold};
+    font-weight: ${theme.fonts.weights.bold};
     color: ${theme.colors.white};
   }
 
   h1 {
-    font-size: ${theme.fonts.P5};
+    font-size: ${theme.fonts.size.P5};
     margin-bottom: 14px;
   }
 
   h2 {
-    font-size: ${theme.fonts.P4};
+    font-size: ${theme.fonts.size.P4};
     margin-top: 22px;
   }
 

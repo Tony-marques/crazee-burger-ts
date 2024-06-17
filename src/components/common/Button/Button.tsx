@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { theme } from "../../../theme";
 
 type ButtonProps = {
-  Icon: JSX.Element;
+  Icon?: JSX.Element;
   label: string;
+  className?: string;
 };
 
-const Button = ({ Icon, label }: ButtonProps) => {
+const Button = ({ Icon, label, className }: ButtonProps) => {
   return (
-    <ButtonStyled>
+    <ButtonStyled className={className}>
       <span>{label}</span>
       {Icon && Icon}
     </ButtonStyled>
@@ -23,7 +24,7 @@ const ButtonStyled = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${theme.colors.primary_burger};
+  background-color: ${theme.colors.primary};
   border: 1px solid transparent;
   cursor: pointer;
   border-radius: ${theme.borderRadius.round};
