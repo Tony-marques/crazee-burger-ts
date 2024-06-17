@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Main from "./Main/Main";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar/NavBar";
 
 const Container = () => {
   const { name } = useParams();
