@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { theme } from "../../../theme";
-import { formatPrice } from "../../../utils/maths";
-import Button from "../../common/Button/Button";
+import { theme } from "../../../../theme";
+import { formatPrice } from "../../../../utils/maths";
+import Button from "../../../common/Button/Button";
 
 type MenuItemProps = {
   imageSource: string;
@@ -25,7 +25,7 @@ const MenuItem = ({ imageSource, title, price }: MenuItemProps) => {
 export default MenuItem;
 
 const MenuItemStyled = styled.div`
-  max-width: 300px;
+  /* max-width: 300px; */
   height: 330px;
   padding: 20px;
   display: flex;
@@ -50,7 +50,6 @@ const MenuItemStyled = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-
   }
 
   .bottom {

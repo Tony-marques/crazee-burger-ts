@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { fakeMenu2 } from "../../../fakeData/fakeMenu";
+import { fakeMenu2 } from "../../../../fakeData/fakeMenu";
 import MenuItem from "./MenuItem";
 
 const MenuList = () => {
@@ -27,7 +27,7 @@ const MenuListStyled = styled.div`
   justify-content: center;
   row-gap: 60px;
   column-gap: 85px;
-  grid-template-columns: repeat(4, 240px);
+  grid-template-columns: repeat(auto-fit, 240px);
   overflow-y: scroll;
   height: 100%;
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
