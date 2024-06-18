@@ -6,6 +6,14 @@ import { useAdminContext } from "../../../../contexts/AdminContext";
 import { theme } from "../../../../theme";
 import Tab from "./Tab";
 
+type TabConfigsType = {
+  id: number;
+  Icon: JSX.Element;
+  title?: string;
+  activeClassName?: string;
+  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+};
+
 const Tabs = () => {
   const {
     selectedTab,
@@ -21,7 +29,7 @@ const Tabs = () => {
     }
   };
 
-  const TabConfigs = [
+  const TabConfigs: TabConfigsType[] = [
     {
       id: 0,
       Icon: isCollapse ? <FiChevronDown /> : <FiChevronUp />,
