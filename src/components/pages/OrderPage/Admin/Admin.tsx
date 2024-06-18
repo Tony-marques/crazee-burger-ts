@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import AdminPanel from "./AdminPanel";
 import Tabs from "./Tabs";
 
 const Admin = () => {
   return (
     <AdminStyled>
       <Tabs />
+      <AdminPanel />
     </AdminStyled>
   );
 };
