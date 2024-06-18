@@ -26,12 +26,26 @@ const TabStyled = styled.div`
   justify-content: center;
   align-items: center;
   gap: 13px;
-  border: 1px solid black;
   border-radius: 5px 5px 0px 0px;
   background-color: ${theme.colors.white};
   cursor: pointer;
   color: ${theme.colors.greySemiDark};
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-bottom-color 0.2s;
+  border-bottom: 1px solid ${theme.colors.greyLight};
+  box-shadow: 0px -6px 8px -2px #0000001A;
+
+
+  &:hover {
+    border-bottom-color: ${theme.colors.white};
+  }
+
+  p {
+    border-bottom: 2px solid transparent;
+    transition: border 0.2s, color 0.2s;
+  }
+  &:hover p {
+    border-bottom: 2px solid ${theme.colors.greySemiDark};
+  }
 
   svg {
     font-size: 16px;

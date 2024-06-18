@@ -71,13 +71,19 @@ export default Tabs;
 
 const TabsStyled = styled.div`
   height: 44px;
-  border: 1px solid blue;
   display: flex;
   gap: 1px;
   padding-left: 71px;
+  position: absolute;
+  top: -43px;
 
   .is-selected {
     background-color: ${theme.colors.background_dark};
     color: ${theme.colors.white};
+    border-bottom-color: ${theme.colors.background_dark};
+
+    &:hover p {
+      border-bottom: 2px solid ${theme.colors.white};
+    }
   }
 `;
