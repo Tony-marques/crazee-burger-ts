@@ -1,12 +1,14 @@
 import styled from "styled-components";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 import AdminPanel from "./AdminPanel";
 import Tabs from "./Tabs";
 
 const Admin = () => {
+  const { isCollapse } = useAdminContext();
   return (
     <AdminStyled>
       <Tabs />
-      <AdminPanel />
+      {isCollapse && <AdminPanel />}
     </AdminStyled>
   );
 };
@@ -16,7 +18,6 @@ export default Admin;
 const AdminStyled = styled.div`
   border: 1px solid red;
   width: 100%;
-  height: 300px;
   position: absolute;
   bottom: 0;
   display: flex;
