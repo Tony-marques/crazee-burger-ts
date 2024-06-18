@@ -4,11 +4,14 @@ import { theme } from "../../../../theme";
 type TabProps = {
   Icon: JSX.Element;
   title?: string;
+  isSelected?: boolean;
+  activeClassName?: string | undefined;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 };
 
-const Tab = ({ Icon, title }: TabProps) => {
+const Tab = ({ Icon, title, activeClassName, onClick }: TabProps) => {
   return (
-    <TabStyled>
+    <TabStyled onClick={onClick} className={activeClassName}>
       {Icon}
       {title && <p>{title}</p>}
     </TabStyled>
@@ -27,9 +30,10 @@ const TabStyled = styled.div`
   border-radius: 5px 5px 0px 0px;
   background-color: ${theme.colors.white};
   cursor: pointer;
-  color:${theme.colors.greySemiDark};
+  color: ${theme.colors.greySemiDark};
+  transition: background 0.2s, color 0.2s;
 
-  svg{
+  svg {
     font-size: 16px;
   }
 `;

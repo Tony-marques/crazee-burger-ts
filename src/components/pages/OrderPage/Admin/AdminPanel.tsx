@@ -11,4 +11,5 @@ const AdminPanelStyled = styled.div`
   border: 1px solid orange;
   flex: 1;
   background-color: ${theme.colors.white};
+  min-height: 250px;
 `;

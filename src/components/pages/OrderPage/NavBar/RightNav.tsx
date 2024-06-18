@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { theme } from "../../../../theme";
 import UserProfil from "./UserProfil";
 import ToggleButton from "../../../common/ToggleButton";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 
 type RightNavProps = {
   name?: string;
@@ -11,9 +12,11 @@ type RightNavProps = {
 
 const RightNav = ({ name }: RightNavProps) => {
   const [isChecked, setIsChecked] = useState(false);
+  const {handleChangeIsAdmin} = useAdminContext()
 
   const handleToggleButton = () => {
     setIsChecked((prev) => !prev);
+    handleChangeIsAdmin()
     if (!isChecked) toast.info("Mode admin activé");
   };
 
