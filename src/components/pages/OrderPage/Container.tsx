@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import Admin from "./Admin/Admin";
 import Main from "./Main/Main";
 import NavBar from "./NavBar/NavBar";
 
@@ -10,6 +11,7 @@ const Container = () => {
     <ContainerStyled>
       <NavBar name={name} />
       <Main />
+      <Admin />
     </ContainerStyled>
   );
 };
@@ -23,4 +25,5 @@ const ContainerStyled = styled.div`
   flex-direction: column;
   border-radius: 15px;
   overflow: hidden;
+  position: relative;
 `;

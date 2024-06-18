@@ -3,7 +3,7 @@ import { theme } from "../../theme";
 
 type ToggleButtonProps = {
   isChecked: boolean;
-  onToggle?: any;
+  onToggle?: React.ChangeEventHandler<HTMLInputElement>;
   labelIfChecked?: string;
   labelIfUnchecked?: string;
 };
