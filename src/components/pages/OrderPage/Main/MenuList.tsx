@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { fakeMenu2 } from "../../../../fakeData/fakeMenu";
 import MenuItem from "./MenuItem";
+import { formatPrice } from "../../../../utils/maths";
 
 const MenuList = () => {
   const [menu] = useState(fakeMenu2);
@@ -13,7 +14,7 @@ const MenuList = () => {
           key={id}
           imageSource={imageSource}
           title={title}
-          price={price}
+          price={formatPrice(price)}
         />
       ))}
     </MenuListStyled>

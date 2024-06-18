@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useAdminContext } from "../../../../contexts/AdminContext";
+import { useAdminContext } from "../../../../../contexts/AdminContext";
 import AdminPanel from "./AdminPanel";
 import Tabs from "./Tabs";
 

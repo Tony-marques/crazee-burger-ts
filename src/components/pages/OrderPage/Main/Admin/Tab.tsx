@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { theme } from "../../../../theme";
+import { theme } from "../../../../../theme";
 
 type TabProps = {
   Icon: JSX.Element;
   title?: string;
   isSelected?: boolean;
   activeClassName?: string | undefined;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 const Tab = ({ Icon, title, activeClassName, onClick }: TabProps) => {
@@ -20,7 +20,7 @@ const Tab = ({ Icon, title, activeClassName, onClick }: TabProps) => {
 
 export default Tab;
 
-const TabStyled = styled.div`
+const TabStyled = styled.button`
   padding: 13px 22px;
   display: flex;
   justify-content: center;
@@ -31,9 +31,11 @@ const TabStyled = styled.div`
   cursor: pointer;
   color: ${theme.colors.greySemiDark};
   transition: background 0.2s, color 0.2s, border-bottom-color 0.2s;
+  border: none;
   border-bottom: 1px solid ${theme.colors.greyLight};
-  box-shadow: 0px -6px 8px -2px #0000001A;
-
+  box-shadow: 0px -6px 8px -2px #0000001a;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
 
   &:hover {
     border-bottom-color: ${theme.colors.white};

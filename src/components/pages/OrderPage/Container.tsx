@@ -1,19 +1,15 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useAdminContext } from "../../../contexts/AdminContext";
-import Admin from "./Admin/Admin";
 import Main from "./Main/Main";
 import NavBar from "./NavBar/NavBar";
 
 const Container = () => {
   const { name } = useParams();
-  const { isAdmin } = useAdminContext();
 
   return (
     <ContainerStyled>
       <NavBar name={name} />
       <Main />
-      {isAdmin && <Admin />}
     </ContainerStyled>
   );
 };
