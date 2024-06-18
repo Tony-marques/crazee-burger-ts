@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
 type AdminContextProviderProps = {
   children: ReactNode;
@@ -7,6 +7,10 @@ type AdminContextProviderProps = {
 type AdminContextType = {
   selectedTab: string;
   handleChangeSelectedTab: (newValue: string) => void;
+  isCollapse: boolean;
+  handleChangeIsCollapse: () => void;
+  isAdmin: boolean;
+  handleChangeIsAdmin: () => void;
 };
 
 const AdminContext = createContext<AdminContextType | null>(null);
@@ -14,13 +18,36 @@ const AdminContext = createContext<AdminContextType | null>(null);
 export const AdminContextProvider = ({
   children,
 }: AdminContextProviderProps) => {
-  const [selectedTab, setSelectedTab] = useState("ajouter");
+  const [selectedTab, setSelectedTab] = useState("add");
+  const [isCollapse, setIsCollapse] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleChangeSelectedTab = (newValue: string) => {
     setSelectedTab(newValue);
   };
 
-  const AdminContextValue = { selectedTab, handleChangeSelectedTab };
+  const handleChangeIsCollapse = () => {
+    setIsCollapse((prev) => !prev);
+  };
+
+  const handleChangeIsAdmin = () => {
+    setIsAdmin((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setIsCollapse(false)
+  }, [isAdmin])
+
+  console.log(isAdmin);
+
+  const AdminContextValue: AdminContextType = {
+    selectedTab,
+    handleChangeSelectedTab,
+    isCollapse,
+    handleChangeIsCollapse,
+    isAdmin,
+    handleChangeIsAdmin,
+  };
 
   return (
     <AdminContext.Provider value={AdminContextValue}>
