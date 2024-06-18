@@ -1,7 +1,12 @@
 import styled from "styled-components";
+import Tabs from "./Tabs";
 
 const Admin = () => {
-  return <AdminStyled>Admin</AdminStyled>;
+  return (
+    <AdminStyled>
+      <Tabs />
+    </AdminStyled>
+  );
 };
 
 export default Admin;
@@ -12,4 +17,6 @@ const AdminStyled = styled.div`
   height: 300px;
   position: absolute;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
 `;
