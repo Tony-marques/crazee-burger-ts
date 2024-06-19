@@ -17,7 +17,7 @@ const ProductContext = createContext<ProductContextType | null>(null);
 export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
-  const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
+  const [products, setProducts] = useState<ProductType[]>(fakeMenu.EMPTY);
 
   const handleAddProduct = (productToAdd: ProductType) => {
     console.log(productToAdd);
