@@ -61,7 +61,13 @@ const ProductForm = () => {
 
   return (
     <ProductFormStyled>
-      <div className="image-preview">Aucune image</div>
+      <div className="image-preview">
+        {productForm.linkUrl ? (
+          <img src={productForm.linkUrl} alt="image preview" />
+        ) : (
+          <p>Aucune image</p>
+        )}
+      </div>
       <form action="" onSubmit={handleOnSubmit}>
         {inputsConfigs?.map(
           ({
@@ -120,9 +126,23 @@ const ProductFormStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${theme.colors.greySemiDark};
-    border: 1px solid ${theme.colors.greyLight};
-    border-radius: ${theme.borderRadius.round};
+
+    p {
+      color: ${theme.colors.greySemiDark};
+      border: 1px solid ${theme.colors.greyLight};
+      border-radius: ${theme.borderRadius.round};
+      width: 100%;
+      height: 100%;
+      display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
   }
 
   .button-product-form {
