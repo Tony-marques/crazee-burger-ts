@@ -13,6 +13,10 @@ type InputProps = {
   $variant: "primary" | "secondary";
 };
 
+type InputStyledType = {
+  $variant: string;
+};
+
 const Input = ({ Icon, className, $variant, ...restProps }: InputProps) => {
   return (
     <InputStyled $variant={$variant} className={className}>
@@ -24,7 +28,7 @@ const Input = ({ Icon, className, $variant, ...restProps }: InputProps) => {
 
 export default Input;
 
-const InputStyled = styled.div`
+const InputStyled = styled.div<InputStyledType>`
   padding: 19px 26px;
   display: flex;
   justify-content: space-between;
@@ -75,7 +79,7 @@ const secondaryVariant = css`
   }
 `;
 
-const variant = {
+const variant: { [key: string]: ReturnType<typeof css> } = {
   primary: PrimaryVariant,
   secondary: secondaryVariant,
 };

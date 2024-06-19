@@ -10,6 +10,11 @@ type ButtonProps = {
   $variant: "primary" | "secondary";
 };
 
+type ButtonStyledType = {
+  $size: string;
+  $variant: string;
+};
+
 const Button = ({
   label,
   Icon,
@@ -33,7 +38,7 @@ const Button = ({
 
 export default Button;
 
-const ButtonStyled = styled.button`
+const ButtonStyled = styled.button<ButtonStyledType>`
   padding: 18px 0;
   display: flex;
   justify-content: center;
@@ -67,7 +72,7 @@ const sizeFull = css`
   width: 100%;
 `;
 
-const size = {
+const size: { [key: string]: ReturnType<typeof css> } = {
   auto: sizeAuto,
   full: sizeFull,
 };
@@ -108,7 +113,7 @@ const secondaryVariant = css`
   }
 `;
 
-const variant = {
+const variant: { [key: string]: ReturnType<typeof css> } = {
   primary: primaryVariant,
   secondary: secondaryVariant,
 };
