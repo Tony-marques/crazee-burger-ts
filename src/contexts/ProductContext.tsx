@@ -6,11 +6,19 @@ type ProductContextProviderProps = {
   children: ReactNode;
 };
 
+export type ProductFormType = {
+  title: string;
+  imageSource: string;
+  price: string;
+};
+
 type ProductContextType = {
   products: ProductType[];
   handleAddProduct: (productToAdd: ProductType) => void;
   handleDeleteProduct: (idToProductDelete: number) => void;
   handleResetProducts: () => void;
+  productForm: ProductFormType;
+  updateProductForm: (productToUpdate: ProductFormType) => void;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -19,16 +27,23 @@ export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
   const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
+  const [productForm, setProductForm] = useState({
+    title: "",
+    imageSource: "",
+    price: "",
+  });
+
+  const updateProductForm = (productToUpdate: ProductFormType) => {
+    setProductForm(productToUpdate);
+  };
 
   const handleAddProduct = (productToAdd: ProductType) => {
-    console.log(productToAdd);
+    const productsCopy = [...products];
 
-    setProducts((prev) => [{ ...productToAdd }, ...prev]);
+    setProducts([productToAdd, ...productsCopy]);
   };
 
   const handleDeleteProduct = (idToProductDelete: number) => {
-    console.log(idToProductDelete);
-
     const productsCopy = [...products];
     const filteredProducts = productsCopy.filter(
       (product) => product.id !== idToProductDelete
@@ -46,6 +61,8 @@ export const ProductContextProvider = ({
     handleAddProduct,
     handleDeleteProduct,
     handleResetProducts,
+    productForm,
+    updateProductForm,
   };
 
   return (

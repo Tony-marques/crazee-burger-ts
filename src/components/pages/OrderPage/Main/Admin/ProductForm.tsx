@@ -18,12 +18,9 @@ const EMPTY_PRODUCT_FORM = {
 
 const ProductForm = () => {
   const [isMessageSuccess, setIsMessageSuccess] = useState(false);
-  const [productForm, setProductForm] = useState({
-    title: "",
-    imageSource: "",
-    price: "",
-  });
-  const { handleAddProduct } = useProductContext();
+
+  const { handleAddProduct, productForm, updateProductForm } =
+    useProductContext();
 
   useEffect(() => {
     const i = setTimeout(() => {
@@ -36,10 +33,12 @@ const ProductForm = () => {
   }, [isMessageSuccess]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductForm((prev) => ({
-      ...prev,
+    const product = {
+      ...productForm,
       [e.target.name]: e.target.value,
-    }));
+    };
+
+    updateProductForm(product);
   };
 
   const handleOnSubmit = (e: FormEvent) => {
@@ -55,7 +54,7 @@ const ProductForm = () => {
     };
 
     handleAddProduct(newProduct);
-    setProductForm(EMPTY_PRODUCT_FORM);
+    updateProductForm(EMPTY_PRODUCT_FORM);
     setIsMessageSuccess(true);
   };
 
@@ -154,9 +153,10 @@ export default ProductForm;
 
 const ProductFormStyled = styled.div`
   display: grid;
-  grid-template-columns: 215px 645px;
+  grid-template-columns: 1fr 3fr;
+  /* grid-template-columns: 215px 645px; */
   gap: 20px;
-  /* justify-items: center; */
+  justify-content: center;
   /* align-items: center; */
   padding: 31px 71px;
 
