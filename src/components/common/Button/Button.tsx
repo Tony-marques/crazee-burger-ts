@@ -5,13 +5,26 @@ type ButtonProps = {
   label: string;
   Icon?: JSX.Element;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   $size: "auto" | "full";
   $variant: "primary" | "secondary";
 };
 
-const Button = ({ label, Icon, className, $size, $variant }: ButtonProps) => {
+const Button = ({
+  label,
+  Icon,
+  className,
+  onClick,
+  $size,
+  $variant,
+}: ButtonProps) => {
   return (
-    <ButtonStyled className={className} $size={$size} $variant={$variant}>
+    <ButtonStyled
+      className={className}
+      $size={$size}
+      $variant={$variant}
+      onClick={onClick}
+    >
       <span>{label}</span>
       {Icon}
     </ButtonStyled>
