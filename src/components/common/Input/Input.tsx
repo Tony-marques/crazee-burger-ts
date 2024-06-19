@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../../theme";
 
 type InputProps = {
@@ -8,12 +8,14 @@ type InputProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   name: string;
+  className?: string;
   Icon?: JSX.Element;
+  $variant: "primary" | "secondary";
 };
 
-const Input = ({ Icon, ...restProps }: InputProps) => {
+const Input = ({ Icon, className, $variant, ...restProps }: InputProps) => {
   return (
-    <InputStyled>
+    <InputStyled $variant={$variant} className={className}>
       {Icon && Icon}
       <input {...restProps} />
     </InputStyled>
@@ -30,7 +32,7 @@ const InputStyled = styled.div`
   width: 100%;
   border-radius: ${theme.borderRadius.round};
   background-color: ${theme.colors.white};
-  border: 2px solid orange;
+  /* border: 2px solid orange; */
   gap: 13px;
   input {
     flex: 1;
@@ -39,10 +41,7 @@ const InputStyled = styled.div`
     font-weight: 400;
     border: none;
     outline: none;
-
-    &::placeholder {
-      color: #d3d3d3;
-    }
+    background-color: inherit;
   }
 
   svg {
@@ -50,6 +49,33 @@ const InputStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #747b91;
+    color: ${theme.colors.greyBlue};
+  }
+
+  ${({ $variant }) => variant[$variant]}
+`;
+
+const PrimaryVariant = css`
+  background-color: ${theme.colors.white};
+
+  input {
+    &::placeholder {
+      color: #d3d3d3;
+    }
   }
 `;
+
+const secondaryVariant = css`
+  background-color: ${theme.colors.background_white};
+
+  input {
+    &::placeholder {
+      color: ${theme.colors.greyMedium};
+    }
+  }
+`;
+
+const variant = {
+  primary: PrimaryVariant,
+  secondary: secondaryVariant,
+};
