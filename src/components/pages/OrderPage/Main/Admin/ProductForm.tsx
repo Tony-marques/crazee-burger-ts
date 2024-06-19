@@ -25,34 +25,67 @@ const ProductForm = () => {
     e.preventDefault();
   };
 
+  const inputsConfigs = [
+    {
+      type: "text",
+      placeholder: "Nom du produit (ex: Super Burger)",
+      onChange: handleOnChange,
+      value: productForm.name,
+      name: "name",
+      className: "input-product-form",
+      Icon: <FaHamburger />,
+      $variant: "secondary",
+    },
+    {
+      type: "text",
+      placeholder:
+        "Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)",
+      onChange: handleOnChange,
+      value: productForm.linkUrl,
+      name: "linkUrl",
+      className: "input-product-form",
+      Icon: <BsFillCameraFill />,
+      $variant: "secondary",
+    },
+    {
+      type: "text",
+      placeholder: "Prix",
+      onChange: handleOnChange,
+      value: productForm.price,
+      name: "price",
+      className: "input-product-form",
+      Icon: <MdOutlineEuro />,
+      $variant: "secondary",
+    },
+  ];
+
   return (
     <ProductFormStyled>
       <div className="image-preview">Aucune image</div>
       <form action="" onSubmit={handleOnSubmit}>
-        <Input
-          Icon={<FaHamburger />}
-          placeholder="Nom du produit (ex: Super Burger)"
-          value={productForm.name}
-          name="name"
-          type="text"
-          onChange={handleOnChange}
-        />
-        <Input
-          Icon={<BsFillCameraFill />}
-          placeholder="Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)"
-          value={productForm.linkUrl}
-          name="linkUrl"
-          type="text"
-          onChange={handleOnChange}
-        />
-        <Input
-          Icon={<MdOutlineEuro />}
-          placeholder="Prix"
-          value={productForm.price}
-          name="price"
-          type="text"
-          onChange={handleOnChange}
-        />
+        {inputsConfigs?.map(
+          ({
+            type,
+            placeholder,
+            onChange,
+            value,
+            name,
+            className,
+            Icon,
+            $variant,
+          }) => (
+            <Input
+              type={type}
+              placeholder={placeholder}
+              onChange={onChange}
+              value={value}
+              name={name}
+              className={className}
+              Icon={Icon}
+              $variant={$variant}
+            />
+          )
+        )}
         <Button
           label="ajouter un nouveau produit au menu"
           $size="auto"
@@ -75,7 +108,7 @@ const ProductFormStyled = styled.div`
   padding: 31px 71px;
 
   form {
-    border: 2px solid green;
+    /* border: 2px solid green; */
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -94,5 +127,9 @@ const ProductFormStyled = styled.div`
 
   .button-product-form {
     padding: 10px 29px;
+  }
+
+  .input-product-form {
+    padding: 8px 24px;
   }
 `;

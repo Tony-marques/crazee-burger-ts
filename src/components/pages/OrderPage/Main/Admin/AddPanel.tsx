@@ -12,7 +12,7 @@ const AddPanel = () => {
 export default AddPanel;
 
 const AddPanelStyled = styled.div`
-  border: 2px solid red;
+  /* border: 2px solid red; */
   min-height: 250px;
   
 `;
