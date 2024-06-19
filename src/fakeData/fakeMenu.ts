@@ -1,8 +1,8 @@
-import { MenuType } from "../types/MenuType"
+import { ProductType } from "../types/ProductType";
 
-const EMPTY: [] = []
+const EMPTY: [] = [];
 
-const SMALL: MenuType[] = [
+const SMALL: ProductType[] = [
   {
     id: 1,
     imageSource: "/assets/images/burger1.png",
@@ -21,9 +21,9 @@ const SMALL: MenuType[] = [
     isAvailable: true,
     isAdvertised: false,
   },
-]
+];
 
-const MEDIUM: MenuType[] = [
+const MEDIUM: ProductType[] = [
   {
     id: 1,
     imageSource: "/assets/images/burger-bacon-egg.png",
@@ -69,9 +69,9 @@ const MEDIUM: MenuType[] = [
     isAvailable: true,
     isAdvertised: false,
   },
-]
+];
 
-const LARGE: MenuType[] = [
+const LARGE: ProductType[] = [
   {
     id: 1,
     imageSource: "/assets/images/burger-bacon-egg.png",
@@ -162,12 +162,11 @@ const LARGE: MenuType[] = [
     isAvailable: true,
     isAdvertised: false,
   },
-]
-
+];
 
 export const fakeMenu = {
   EMPTY,
   SMALL,
   MEDIUM,
   LARGE,
-}
+};
