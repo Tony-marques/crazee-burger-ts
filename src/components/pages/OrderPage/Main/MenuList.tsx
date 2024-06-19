@@ -1,16 +1,16 @@
-import { useState } from "react";
 import styled from "styled-components";
-import MenuItem from "./MenuItem";
+import { useProductContext } from "../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../utils/maths";
-import { fakeMenu } from "../../../../fakeData/fakeMenu";
+import MenuItem from "./MenuItem";
 
 const MenuList = () => {
-  const [menu] = useState(fakeMenu.LARGE);
+  const { products } = useProductContext();
 
   return (
     <MenuListStyled>
-      {menu?.map(({ id, title, imageSource, price }) => (
+      {products?.map(({ id, title, imageSource, price }) => (
         <MenuItem
+          id={id}
           key={id}
           imageSource={imageSource}
           title={title}

@@ -3,16 +3,25 @@ import { BsFillCameraFill } from "react-icons/bs";
 import { FaHamburger } from "react-icons/fa";
 import { MdOutlineEuro } from "react-icons/md";
 import styled from "styled-components";
+import { useProductContext } from "../../../../../contexts/ProductContext";
 import { theme } from "../../../../../theme";
+import { ProductType } from "../../../../../types/ProductType";
 import Button from "../../../../common/Button/Button";
 import Input from "../../../../common/Input/Input";
 
+const EMPTY_PRODUCT_FORM = {
+  title: "",
+  imageSource: "",
+  price: "",
+};
+
 const ProductForm = () => {
   const [productForm, setProductForm] = useState({
-    name: "",
-    linkUrl: "",
+    title: "",
+    imageSource: "",
     price: "",
   });
+  const { handleAddProduct } = useProductContext();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductForm((prev) => ({
@@ -23,31 +32,46 @@ const ProductForm = () => {
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    const newProduct: ProductType = {
+      ...productForm,
+      id: new Date().getTime(),
+      quantity: 0,
+      isAvailable: true,
+      isAdvertised: true,
+      price: Number(productForm.price),
+    };
+
+    handleAddProduct(newProduct);
+    setProductForm(EMPTY_PRODUCT_FORM);
   };
 
   const inputsConfigs = [
     {
+      id: 0,
       type: "text",
       placeholder: "Nom du produit (ex: Super Burger)",
       onChange: handleOnChange,
-      value: productForm.name,
-      name: "name",
+      value: productForm.title,
+      name: "title",
       className: "input-product-form",
       Icon: <FaHamburger />,
       $variant: "secondary",
     },
     {
+      id: 1,
       type: "text",
       placeholder:
         "Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)",
       onChange: handleOnChange,
-      value: productForm.linkUrl,
-      name: "linkUrl",
+      value: productForm.imageSource,
+      name: "imageSource",
       className: "input-product-form",
       Icon: <BsFillCameraFill />,
       $variant: "secondary",
     },
     {
+      id: 2,
       type: "text",
       placeholder: "Prix",
       onChange: handleOnChange,
@@ -62,8 +86,8 @@ const ProductForm = () => {
   return (
     <ProductFormStyled>
       <div className="image-preview">
-        {productForm.linkUrl ? (
-          <img src={productForm.linkUrl} alt="image preview" />
+        {productForm.imageSource ? (
+          <img src={productForm.imageSource} alt="image preview" />
         ) : (
           <p>Aucune image</p>
         )}
@@ -71,6 +95,7 @@ const ProductForm = () => {
       <form action="" onSubmit={handleOnSubmit}>
         {inputsConfigs?.map(
           ({
+            id,
             type,
             placeholder,
             onChange,
@@ -81,6 +106,7 @@ const ProductForm = () => {
             $variant,
           }) => (
             <Input
+              key={id}
               type={type}
               placeholder={placeholder}
               onChange={onChange}
@@ -134,8 +160,8 @@ const ProductFormStyled = styled.div`
       width: 100%;
       height: 100%;
       display: flex;
-    justify-content: center;
-    align-items: center;
+      justify-content: center;
+      align-items: center;
     }
 
     img {

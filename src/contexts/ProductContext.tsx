@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { fakeMenu } from "../fakeData/fakeMenu";
 import { ProductType } from "../types/ProductType";
 
 type ProductContextProviderProps = {
@@ -8,6 +9,7 @@ type ProductContextProviderProps = {
 type ProductContextType = {
   products: ProductType[];
   handleAddProduct: (productToAdd: ProductType) => void;
+  handleDeleteProduct: (idToProductDelete: number) => void;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -15,15 +17,30 @@ const ProductContext = createContext<ProductContextType | null>(null);
 export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
 
   const handleAddProduct = (productToAdd: ProductType) => {
-    setProducts();
+    console.log(productToAdd);
+
+    setProducts((prev) => [{ ...productToAdd }, ...prev]);
   };
+
+  const handleDeleteProduct = (idToProductDelete: number) => {
+    console.log(idToProductDelete);
+    
+    const productsCopy = [...products];
+    const filteredProducts = productsCopy.filter((product) => product.id !== idToProductDelete);
+    console.log(filteredProducts);
+
+    setProducts(filteredProducts)
+  };
+
+  // console.log(products);
 
   const productContextValue: ProductContextType = {
     products,
     handleAddProduct,
+    handleDeleteProduct,
   };
 
   return (
