@@ -35,6 +35,7 @@ const LoginForm = () => {
         value={name}
         name="name"
         Icon={<PiUserCircleFill />}
+        $variant="primary"
       />
       <Button
         label="Accédez à mon espace"
