@@ -36,7 +36,12 @@ const LoginForm = () => {
         name="name"
         Icon={<PiUserCircleFill />}
       />
-      <Button label="Accédez à mon espace" Icon={<MdKeyboardArrowRight />} />
+      <Button
+        label="Accédez à mon espace"
+        Icon={<MdKeyboardArrowRight />}
+        $variant="primary"
+        $size="full"
+      />
     </LoginFormStyled>
   );
 };

@@ -15,7 +15,12 @@ const MenuItem = ({ imageSource, title, price }: MenuItemProps) => {
       <h1>{title}</h1>
       <div className="bottom">
         <div className="price">{price}</div>
-        <Button label="Ajouter" className="button-menuitem" />
+        <Button
+          label="Ajouter"
+          className="button-menuitem"
+          $variant="primary"
+          $size="full"
+        />
       </div>
     </MenuItemStyled>
   );

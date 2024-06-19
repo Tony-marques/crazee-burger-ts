@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 import { FaHamburger } from "react-icons/fa";
 import { MdOutlineEuro } from "react-icons/md";
@@ -21,10 +21,14 @@ const ProductForm = () => {
     }));
   };
 
+  const handleOnSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <ProductFormStyled>
       <div className="image-preview">Aucune image</div>
-      <form action="">
+      <form action="" onSubmit={handleOnSubmit}>
         <Input
           Icon={<FaHamburger />}
           placeholder="Nom du produit (ex: Super Burger)"
@@ -49,7 +53,12 @@ const ProductForm = () => {
           type="text"
           onChange={handleOnChange}
         />
-        <Button label="ajouter un nouveau produit au menu" />
+        <Button
+          label="ajouter un nouveau produit au menu"
+          $size="auto"
+          $variant="secondary"
+          className="button-product-form"
+        />
       </form>
     </ProductFormStyled>
   );
@@ -81,5 +90,9 @@ const ProductFormStyled = styled.div`
     color: ${theme.colors.greySemiDark};
     border: 1px solid ${theme.colors.greyLight};
     border-radius: ${theme.borderRadius.round};
+  }
+
+  .button-product-form {
+    padding: 10px 29px;
   }
 `;
