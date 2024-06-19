@@ -27,7 +27,6 @@ const EmptyMessage = ({
 export default EmptyMessage;
 
 const EmptyMessageStyled = styled.div`
-  border: 1px solid blue;
   height: 100%;
   display: flex;
   justify-content: center;
