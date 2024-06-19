@@ -10,6 +10,7 @@ type ProductContextType = {
   products: ProductType[];
   handleAddProduct: (productToAdd: ProductType) => void;
   handleDeleteProduct: (idToProductDelete: number) => void;
+  handleResetProducts: () => void;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -27,20 +28,24 @@ export const ProductContextProvider = ({
 
   const handleDeleteProduct = (idToProductDelete: number) => {
     console.log(idToProductDelete);
-    
-    const productsCopy = [...products];
-    const filteredProducts = productsCopy.filter((product) => product.id !== idToProductDelete);
-    console.log(filteredProducts);
 
-    setProducts(filteredProducts)
+    const productsCopy = [...products];
+    const filteredProducts = productsCopy.filter(
+      (product) => product.id !== idToProductDelete
+    );
+
+    setProducts(filteredProducts);
   };
 
-  // console.log(products);
+  const handleResetProducts = () => {
+    setProducts(fakeMenu.LARGE);
+  };
 
   const productContextValue: ProductContextType = {
     products,
     handleAddProduct,
     handleDeleteProduct,
+    handleResetProducts,
   };
 
   return (

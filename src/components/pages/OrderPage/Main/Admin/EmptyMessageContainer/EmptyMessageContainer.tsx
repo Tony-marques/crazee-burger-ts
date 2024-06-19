@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import { useAdminContext } from "../../../../../../contexts/AdminContext";
+import { useProductContext } from "../../../../../../contexts/ProductContext";
 import Button from "../../../../../common/Button/Button";
 import EmptyMessage from "./EmptyMessage";
 
 const EmptyMessageContainer = () => {
   const { isAdmin } = useAdminContext();
+  const { handleResetProducts } = useProductContext();
+
+  const handleOnClick = () => {
+    handleResetProducts();
+  };
+  
   return (
     <EmptyMessageContainerStyled>
       {isAdmin && (
@@ -17,6 +24,7 @@ const EmptyMessageContainer = () => {
               $variant="primary"
               $size="auto"
               className="empty-message-button"
+              onClick={handleOnClick}
             />
           }
         />
@@ -38,7 +46,7 @@ const EmptyMessageContainerStyled = styled.div`
   /* border: 1px solid red; */
   height: 100%;
 
-  .empty-message-button{
+  .empty-message-button {
     padding: 19px 25px;
   }
 `;
