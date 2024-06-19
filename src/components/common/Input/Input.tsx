@@ -4,7 +4,7 @@ import { theme } from "../../../theme";
 type InputProps = {
   type: string;
   placeholder: string;
-  required: boolean;
+  required?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   name: string;
@@ -30,10 +30,11 @@ const InputStyled = styled.div`
   width: 100%;
   border-radius: ${theme.borderRadius.round};
   background-color: ${theme.colors.white};
-
+  border: 2px solid orange;
+  gap: 13px;
   input {
     flex: 1;
-    max-width: 320px;
+    /* max-width: 320px; */
     font-family: arial;
     font-weight: 400;
     border: none;
