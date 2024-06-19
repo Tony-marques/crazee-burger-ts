@@ -25,7 +25,7 @@ const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
       {isAdmin && (
         <TiDelete className="delete" onClick={() => handleOnClick(id)} />
       )}
-      <img src={imageSource} alt={"burger " + title} />
+      <img src={imageSource ? imageSource : "/assets/images/coming-soon.png"} alt={"burger " + title} />
       <h1>{title}</h1>
       <div className="bottom">
         <div className="price">{price}</div>
