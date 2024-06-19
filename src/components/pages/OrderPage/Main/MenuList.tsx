@@ -34,5 +34,4 @@ const MenuListStyled = styled.div`
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
   background: #f5f5f7;
   padding: 50px 50px 300px;
-  /* flex-wrap: wrap; */
 `;
