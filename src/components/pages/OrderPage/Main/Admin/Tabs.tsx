@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useAdminContext } from "../../../../../contexts/AdminContext";
 import { theme } from "../../../../../theme";
-import Tab from "./Tab";
+import Tab from "../../../../common/Tab/Tab";
 import { getTabsConfigs } from "./helpers/getTabsConfigs";
 
 const Tabs = () => {

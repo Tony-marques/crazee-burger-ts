@@ -1,6 +1,8 @@
 import { MenuType } from "../types/MenuType"
 
-export const fakeMenu1: MenuType[] = [
+const EMPTY: [] = []
+
+const SMALL: MenuType[] = [
   {
     id: 1,
     imageSource: "/assets/images/burger1.png",
@@ -21,7 +23,55 @@ export const fakeMenu1: MenuType[] = [
   },
 ]
 
-export const fakeMenu2: MenuType[] = [
+const MEDIUM: MenuType[] = [
+  {
+    id: 1,
+    imageSource: "/assets/images/burger-bacon-egg.png",
+    title: "Burger Smoke BBQ",
+    price: 5.598,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+  {
+    id: 2,
+    imageSource: "/assets/images/burger-vegan.png",
+    title: "Vegan Burger",
+    price: 5.4985,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+  {
+    id: 3,
+    imageSource: "/assets/images/burger3.png",
+    title: "Burger poulet",
+    price: 5.367,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+  {
+    id: 4,
+    imageSource: "/assets/images/drink1.png",
+    title: "Coke 25cl",
+    price: 3.568,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+  {
+    id: 5,
+    imageSource: "/assets/images/drink2.png",
+    title: "Pepsi 25cl",
+    price: 3.487,
+    quantity: 0,
+    isAvailable: true,
+    isAdvertised: false,
+  },
+]
+
+const LARGE: MenuType[] = [
   {
     id: 1,
     imageSource: "/assets/images/burger-bacon-egg.png",
@@ -113,3 +163,11 @@ export const fakeMenu2: MenuType[] = [
     isAdvertised: false,
   },
 ]
+
+
+export const fakeMenu = {
+  EMPTY,
+  SMALL,
+  MEDIUM,
+  LARGE,
+}

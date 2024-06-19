@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { theme } from "../../../../theme";
-import ToggleButton from "../../../common/ToggleButton";
+import ToggleButton from "../../../common/ToggleButton/ToggleButton";
 import UserProfil from "./UserProfil";
 
 type RightNavProps = {
