@@ -4,6 +4,7 @@ import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
 import Button from "../../../common/Button/Button";
+import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
 
 type MenuItemProps = {
   id: number;
@@ -25,7 +26,10 @@ const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
       {isAdmin && (
         <TiDelete className="delete" onClick={() => handleOnClick(id)} />
       )}
-      <img src={imageSource ? imageSource : "/assets/images/coming-soon.png"} alt={"burger " + title} />
+      <img
+        src={imageSource ? imageSource : DEFAULT_IMAGE}
+        alt={"burger " + title}
+      />
       <h1>{title}</h1>
       <div className="bottom">
         <div className="price">{price}</div>
