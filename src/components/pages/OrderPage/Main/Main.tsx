@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
+import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
 import Admin from "./Admin/Admin";
+import EmptyMessageContainer from "./Admin/EmptyMessageContainer/EmptyMessageContainer";
 import MenuList from "./MenuList";
 
 const Main = () => {
   const { isAdmin } = useAdminContext();
+  const { products } = useProductContext();
 
   return (
     <MainStyled>
       {/* <div className="basket"></div> */}
       <div className="menu-and-admin">
-        <MenuList />
+        {products.length ? <MenuList /> : <EmptyMessageContainer />}
+
         {isAdmin && <Admin />}
       </div>
     </MainStyled>
