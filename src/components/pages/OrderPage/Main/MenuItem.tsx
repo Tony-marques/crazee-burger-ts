@@ -1,16 +1,30 @@
+import { TiDelete } from "react-icons/ti";
 import styled from "styled-components";
+import { useAdminContext } from "../../../../contexts/AdminContext";
+import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
 import Button from "../../../common/Button/Button";
 
 type MenuItemProps = {
+  id: number;
   imageSource: string;
   title: string;
   price: string;
 };
 
-const MenuItem = ({ imageSource, title, price }: MenuItemProps) => {
+const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
+  const { isAdmin } = useAdminContext();
+  const { handleDeleteProduct } = useProductContext();
+
+  const handleOnClick = (idToDelete: number) => {
+    handleDeleteProduct(idToDelete);
+  };
+
   return (
     <MenuItemStyled>
+      {isAdmin && (
+        <TiDelete className="delete" onClick={() => handleOnClick(id)} />
+      )}
       <img src={imageSource} alt={"burger " + title} />
       <h1>{title}</h1>
       <div className="bottom">
@@ -38,6 +52,7 @@ const MenuItemStyled = styled.div`
   flex-direction: column;
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
+  position: relative;
   img {
     max-width: 100%;
     height: 145px;
@@ -73,5 +88,19 @@ const MenuItemStyled = styled.div`
   .button-menuitem {
     padding: 12px;
     font-size: 11px;
+  }
+
+  .delete {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 30px;
+    color: ${theme.colors.primary};
+    transition: color 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      color: ${theme.colors.red};
+    }
   }
 `;
