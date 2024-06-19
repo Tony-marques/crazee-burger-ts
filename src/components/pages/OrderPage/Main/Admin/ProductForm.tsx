@@ -1,6 +1,7 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 import { FaHamburger } from "react-icons/fa";
+import { FiCheck } from "react-icons/fi";
 import { MdOutlineEuro } from "react-icons/md";
 import styled from "styled-components";
 import { useProductContext } from "../../../../../contexts/ProductContext";
@@ -16,12 +17,23 @@ const EMPTY_PRODUCT_FORM = {
 };
 
 const ProductForm = () => {
+  const [isMessageSuccess, setIsMessageSuccess] = useState(false);
   const [productForm, setProductForm] = useState({
     title: "",
     imageSource: "",
     price: "",
   });
   const { handleAddProduct } = useProductContext();
+
+  useEffect(() => {
+    const i = setTimeout(() => {
+      setIsMessageSuccess(false);
+    }, 2000);
+
+    return () => {
+      clearInterval(i);
+    };
+  }, [isMessageSuccess]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductForm((prev) => ({
@@ -44,6 +56,7 @@ const ProductForm = () => {
 
     handleAddProduct(newProduct);
     setProductForm(EMPTY_PRODUCT_FORM);
+    setIsMessageSuccess(true);
   };
 
   const inputsConfigs = [
@@ -118,12 +131,20 @@ const ProductForm = () => {
             />
           )
         )}
-        <Button
-          label="ajouter un nouveau produit au menu"
-          $size="auto"
-          $variant="secondary"
-          className="button-product-form"
-        />
+        <div className="button-container">
+          <Button
+            label="ajouter un nouveau produit au menu"
+            $size="auto"
+            $variant="secondary"
+            className="button-product-form"
+          />
+          {isMessageSuccess && (
+            <div>
+              <FiCheck />
+              <span>Ajouté avec succès !</span>
+            </div>
+          )}
+        </div>
       </form>
     </ProductFormStyled>
   );
@@ -177,5 +198,25 @@ const ProductFormStyled = styled.div`
 
   .input-product-form {
     padding: 8px 24px;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 15px;
+    color: ${theme.colors.success};
+    font-weight: 400;
+    font-size: 15px;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    svg {
+      font-size: 18px;
+      border: 1px solid ${theme.colors.success};
+      border-radius: ${theme.borderRadius.circle};
+    }
   }
 `;
