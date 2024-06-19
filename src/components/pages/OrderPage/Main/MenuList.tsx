@@ -1,16 +1,16 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { fakeMenu2 } from "../../../../fakeData/fakeMenu";
-import MenuItem from "./MenuItem";
+import { useProductContext } from "../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../utils/maths";
+import MenuItem from "./MenuItem";
 
 const MenuList = () => {
-  const [menu] = useState(fakeMenu2);
+  const { products } = useProductContext();
 
   return (
     <MenuListStyled>
-      {menu?.map(({ id, title, imageSource, price }) => (
+      {products?.map(({ id, title, imageSource, price }) => (
         <MenuItem
+          id={id}
           key={id}
           imageSource={imageSource}
           title={title}
@@ -34,5 +34,4 @@ const MenuListStyled = styled.div`
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
   background: #f5f5f7;
   padding: 50px 50px 300px;
-  /* flex-wrap: wrap; */
 `;

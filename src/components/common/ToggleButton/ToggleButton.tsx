@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../theme";
+import { theme } from "../../../theme";
 
 type ToggleButtonProps = {
   isChecked: boolean;
@@ -72,7 +72,6 @@ const ToggleButtonStyled = styled.div`
 
     // text inside the switch button (for checked and unchecked)
     &.toggle + label:after {
-      /* border: 1px solid blue; */
       width: 150px;
       text-align: center;
       z-index: 2;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../../../../theme";
+import { theme } from "../../../theme";
 
 type TabProps = {
   Icon: JSX.Element;
