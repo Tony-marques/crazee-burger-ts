@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { theme } from "../../../../theme";
-import { formatPrice } from "../../../../utils/maths";
 import Button from "../../../common/Button/Button";
 
 type MenuItemProps = {
   imageSource: string;
   title: string;
-  price: number;
+  price: string;
 };
 
 const MenuItem = ({ imageSource, title, price }: MenuItemProps) => {
@@ -15,7 +14,7 @@ const MenuItem = ({ imageSource, title, price }: MenuItemProps) => {
       <img src={imageSource} alt={"burger " + title} />
       <h1>{title}</h1>
       <div className="bottom">
-        <div className="price">{formatPrice(price)}</div>
+        <div className="price">{price}</div>
         <Button label="Ajouter" className="button-menuitem" />
       </div>
     </MenuItemStyled>

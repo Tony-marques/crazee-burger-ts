@@ -1,12 +1,19 @@
 import styled from "styled-components";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 import { theme } from "../../../../theme";
+import Admin from "./Admin/Admin";
 import MenuList from "./MenuList";
 
 const Main = () => {
+  const { isAdmin } = useAdminContext();
+
   return (
     <MainStyled>
       {/* <div className="basket"></div> */}
-      <MenuList />
+      <div className="menu-and-admin">
+        <MenuList />
+        {isAdmin && <Admin />}
+      </div>
     </MainStyled>
   );
 };
@@ -21,6 +28,10 @@ const MainStyled = styled.div`
   display: grid;
   /* grid-template-columns: 25% 1fr; */
   grid-template-columns: 1fr;
+
+  .menu-and-admin {
+    overflow: hidden;
+  }
 
   .basket {
     background-color: red;

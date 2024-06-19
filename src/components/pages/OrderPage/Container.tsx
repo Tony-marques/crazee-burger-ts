@@ -23,4 +23,5 @@ const ContainerStyled = styled.div`
   flex-direction: column;
   border-radius: 15px;
   overflow: hidden;
+  position: relative;
 `;

@@ -1,27 +1,27 @@
-import { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 import { theme } from "../../../../theme";
-import UserProfil from "./UserProfil";
 import ToggleButton from "../../../common/ToggleButton";
+import UserProfil from "./UserProfil";
 
 type RightNavProps = {
   name?: string;
 };
 
 const RightNav = ({ name }: RightNavProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+  const { handleChangeIsAdmin, isAdmin } = useAdminContext();
 
   const handleToggleButton = () => {
-    setIsChecked((prev) => !prev);
-    if (!isChecked) toast.info("Mode admin activé");
+    handleChangeIsAdmin();
+    if (!isAdmin) toast.info("Mode admin activé");
   };
 
   return (
     <RightNavStyled>
       <ToggleButton
         onToggle={handleToggleButton}
-        isChecked={isChecked}
+        isChecked={isAdmin}
         labelIfUnchecked="ACTIVER LE MODE ADMIN"
         labelIfChecked="DÉSACTIVER LE MODE ADMIN"
       />
