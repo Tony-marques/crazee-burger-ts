@@ -16,6 +16,18 @@ const EMPTY_PRODUCT_FORM = {
   price: "",
 };
 
+type InputsConfigsType = {
+  id: number;
+  type: string;
+  placeholder: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  value: string;
+  name: string;
+  className: string;
+  Icon: JSX.Element;
+  $variant: "secondary" | "primary";
+};
+
 const ProductForm = () => {
   const [isMessageSuccess, setIsMessageSuccess] = useState(false);
 
@@ -58,7 +70,7 @@ const ProductForm = () => {
     setIsMessageSuccess(true);
   };
 
-  const inputsConfigs = [
+  const inputsConfigs: InputsConfigsType[] = [
     {
       id: 0,
       type: "text",

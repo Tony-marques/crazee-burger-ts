@@ -19,6 +19,8 @@ type ProductContextType = {
   handleResetProducts: () => void;
   productForm: ProductFormType;
   updateProductForm: (productToUpdate: ProductFormType) => void;
+  selectedProduct: number | undefined;
+  handleSelectedProduct: (selectedProductId: number | undefined) => void;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -27,11 +29,18 @@ export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
   const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
+  const [selectedProduct, setSelectedProduct] = useState<number | undefined>();
   const [productForm, setProductForm] = useState({
     title: "",
     imageSource: "",
     price: "",
   });
+
+  const handleSelectedProduct = (selectedProductId: number | undefined) => {
+    console.log(selectedProductId);
+
+    setSelectedProduct(selectedProductId);
+  };
 
   const updateProductForm = (productToUpdate: ProductFormType) => {
     setProductForm(productToUpdate);
@@ -63,6 +72,8 @@ export const ProductContextProvider = ({
     handleResetProducts,
     productForm,
     updateProductForm,
+    selectedProduct,
+    handleSelectedProduct,
   };
 
   return (

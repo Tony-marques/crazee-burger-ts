@@ -1,5 +1,5 @@
 import { TiDelete } from "react-icons/ti";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
@@ -11,20 +11,44 @@ type MenuItemProps = {
   imageSource: string;
   title: string;
   price: string;
+  $selected: boolean;
+  $isAdmin: boolean;
 };
 
-const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
-  const { isAdmin } = useAdminContext();
-  const { handleDeleteProduct } = useProductContext();
+type MenuItemStyledType = {
+  $selected: boolean;
+  $isAdmin: boolean;
+};
 
-  const handleOnClick = (idToDelete: number) => {
+const MenuItem = ({
+  id,
+  imageSource,
+  title,
+  price,
+  $selected,
+  $isAdmin,
+}: MenuItemProps) => {
+  const { isAdmin } = useAdminContext();
+  const { handleDeleteProduct, handleSelectedProduct } = useProductContext();
+
+  const handleOnDelete = (idToDelete: number) => {
     handleDeleteProduct(idToDelete);
   };
 
+  const handleOnSelected = (selectedProductId: number | undefined) => {
+    if (isAdmin) {
+      handleSelectedProduct(selectedProductId);
+    }
+  };
+
   return (
-    <MenuItemStyled>
+    <MenuItemStyled
+      onClick={() => handleOnSelected(id)}
+      $selected={$selected}
+      $isAdmin={$isAdmin}
+    >
       {isAdmin && (
-        <TiDelete className="delete" onClick={() => handleOnClick(id)} />
+        <TiDelete className="delete" onClick={() => handleOnDelete(id)} />
       )}
       <img
         src={imageSource ? imageSource : DEFAULT_IMAGE}
@@ -46,7 +70,7 @@ const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
 
 export default MenuItem;
 
-const MenuItemStyled = styled.div`
+const MenuItemStyled = styled.div<MenuItemStyledType>`
   /* max-width: 300px; */
   height: 330px;
   padding: 20px;
@@ -57,6 +81,7 @@ const MenuItemStyled = styled.div`
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
   position: relative;
+  transition: background-color 0.2s;
   img {
     max-width: 100%;
     height: 145px;
@@ -105,6 +130,45 @@ const MenuItemStyled = styled.div`
 
     &:hover {
       color: ${theme.colors.red};
+    }
+  }
+
+  ${({ $selected }) => $selected && selectedProduct}
+  ${({ $isAdmin }) => $isAdmin && hoverProduct}
+  ${({ $isAdmin, $selected }) => $isAdmin && $selected && hoverButtonProduct}
+`;
+
+const selectedProduct = css`
+  background-color: ${theme.colors.primary};
+
+  button {
+    background-color: ${theme.colors.white};
+
+    span {
+      color: ${theme.colors.primary};
+    }
+  }
+
+  .delete,
+  .bottom .price {
+    color: ${theme.colors.white};
+  }
+`;
+
+const hoverProduct = css`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const hoverButtonProduct = css`
+  button {
+    &:hover {
+      border-color: ${theme.colors.white};
+      background-color: ${theme.colors.primary};
+      span {
+        color: ${theme.colors.white};
+      }
     }
   }
 `;

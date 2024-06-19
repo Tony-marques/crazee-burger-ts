@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../utils/maths";
 import MenuItem from "./MenuItem";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 
 const MenuList = () => {
-  const { products } = useProductContext();
+  const {isAdmin} = useAdminContext()
+  const { products, selectedProduct } = useProductContext();
 
   return (
     <MenuListStyled>
@@ -15,6 +17,8 @@ const MenuList = () => {
           imageSource={imageSource}
           title={title}
           price={formatPrice(price)}
+          $selected={isAdmin && selectedProduct === id}
+          $isAdmin={isAdmin}
         />
       ))}
     </MenuListStyled>
