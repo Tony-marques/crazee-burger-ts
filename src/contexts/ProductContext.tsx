@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { fakeMenu } from "../fakeData/fakeMenu";
 import { ProductType } from "../types/ProductType";
 
@@ -19,8 +25,9 @@ type ProductContextType = {
   handleResetProducts: () => void;
   productForm: ProductFormType;
   updateProductForm: (productToUpdate: ProductFormType) => void;
-  selectedProduct: number | undefined;
-  handleSelectedProduct: (selectedProductId: number | undefined) => void;
+  selectedProductId: number | undefined;
+  handleSelectedProduct: (productId: number | undefined) => void;
+  selectedProduct: ProductType;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -29,17 +36,25 @@ export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
   const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
-  const [selectedProduct, setSelectedProduct] = useState<number | undefined>();
+  const [selectedProductId, setSelectedProductId] = useState<
+    number | undefined
+  >();
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | undefined>();
   const [productForm, setProductForm] = useState({
     title: "",
     imageSource: "",
     price: "",
   });
 
-  const handleSelectedProduct = (selectedProductId: number | undefined) => {
-    console.log(selectedProductId);
+  useEffect(() => {
+    const product = products.find(
+      (product) => product.id === selectedProductId
+    );
+    setSelectedProduct(product);
+  }, [selectedProductId]);
 
-    setSelectedProduct(selectedProductId);
+  const handleSelectedProduct = (ProductId: number | undefined) => {
+    setSelectedProductId(ProductId);
   };
 
   const updateProductForm = (productToUpdate: ProductFormType) => {
@@ -72,8 +87,9 @@ export const ProductContextProvider = ({
     handleResetProducts,
     productForm,
     updateProductForm,
-    selectedProduct,
+    selectedProductId,
     handleSelectedProduct,
+    selectedProduct,
   };
 
   return (
