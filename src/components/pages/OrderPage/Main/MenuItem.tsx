@@ -28,7 +28,12 @@ const MenuItem = ({
   $selected,
   $isAdmin,
 }: MenuItemProps) => {
-  const { isAdmin } = useAdminContext();
+  const {
+    isAdmin,
+    handleChangeSelectedTab,
+    handleChangeIsCollapse,
+    isCollapse,
+  } = useAdminContext();
   const { handleDeleteProduct, handleSelectedProduct } = useProductContext();
 
   const handleOnDelete = (idToDelete: number) => {
@@ -38,6 +43,10 @@ const MenuItem = ({
   const handleOnSelected = (selectedProductId: number | undefined) => {
     if (isAdmin) {
       handleSelectedProduct(selectedProductId);
+      handleChangeSelectedTab("edit");
+      if (!isCollapse) {
+        handleChangeIsCollapse();
+      }
     }
   };
 
