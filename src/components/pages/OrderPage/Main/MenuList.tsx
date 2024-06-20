@@ -6,7 +6,7 @@ import { useAdminContext } from "../../../../contexts/AdminContext";
 
 const MenuList = () => {
   const {isAdmin} = useAdminContext()
-  const { products, selectedProduct } = useProductContext();
+  const { products, selectedProductId } = useProductContext();
 
   return (
     <MenuListStyled>
@@ -17,7 +17,7 @@ const MenuList = () => {
           imageSource={imageSource}
           title={title}
           price={formatPrice(price)}
-          $selected={isAdmin && selectedProduct === id}
+          $selected={isAdmin && selectedProductId === id}
           $isAdmin={isAdmin}
         />
       ))}
