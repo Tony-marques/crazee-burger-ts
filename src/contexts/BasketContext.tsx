@@ -7,7 +7,7 @@ type BasketContextProviderProps = {
 
 type BasketContextType = {
   basketProducts: ProductType[];
-  handleAddProductInBasket: (basketProduct: ProductType) => void;
+  handleAddProductInBasket: (productToAdd: ProductType) => void;
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -17,12 +17,29 @@ export const BasketContextProvider = ({
 }: BasketContextProviderProps) => {
   const [basketProducts, setBasketProducts] = useState<ProductType[]>([]);
 
-  const handleAddProductInBasket = (basketProduct: ProductType) => {
+  const handleAddProductInBasket = (productToAdd: ProductType) => {
+    const productIsAlreadyInBasket = basketProducts.find(
+      (product) => product.id === productToAdd.id
+    );
+
     const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
 
-    const updatedBasketProducts = [basketProduct, ...basketProductsCopy];
+    if (!productIsAlreadyInBasket) {
+      const updatedBasketProducts = [
+        { ...productToAdd, quantity: 1 },
+        ...basketProductsCopy,
+      ];
+      setBasketProducts(updatedBasketProducts);
+      return;
+    }
 
-    setBasketProducts(updatedBasketProducts);
+    const basketProductIndex = basketProducts.findIndex(
+      (product) => product.id === productToAdd.id
+    );
+
+    basketProductsCopy[basketProductIndex].quantity += 1;
+
+    setBasketProducts(basketProductsCopy);
   };
 
   const basketContextValue: BasketContextType = {

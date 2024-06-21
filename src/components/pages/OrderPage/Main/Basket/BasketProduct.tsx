@@ -34,7 +34,6 @@ export default BasketProduct;
 
 const BasketProductStyled = styled.div`
   padding: 8px 16px;
-  /* border: 1px solid red; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,6 +42,7 @@ const BasketProductStyled = styled.div`
   border-radius: 5px;
   position: relative;
   overflow: hidden;
+  min-height: 86px;
 
   &:hover .remove-button {
     width: 76px;
@@ -51,7 +51,7 @@ const BasketProductStyled = styled.div`
   img {
     width: 85px;
     height: 70px;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .product-informations {

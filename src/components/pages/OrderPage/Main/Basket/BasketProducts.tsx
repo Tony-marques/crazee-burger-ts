@@ -1,16 +1,21 @@
 import styled from "styled-components";
+import { useBasketContext } from "../../../../../contexts/BasketContext";
 import { formatPrice } from "../../../../../utils/maths";
 import BasketProduct from "./BasketProduct";
 
 const BasketProducts = () => {
+  const { basketProducts } = useBasketContext();
   return (
     <BasketProductsStyled>
-      <BasketProduct
-        imageUrl="/assets/images/fries3.png"
-        title="burger poulet"
-        price={formatPrice(3.17)}
-        quantity={13}
-      />
+      {basketProducts.map(({ imageSource, id, title, price, quantity }) => (
+        <BasketProduct
+          key={id}
+          imageUrl={imageSource}
+          title={title}
+          price={formatPrice(price)}
+          quantity={quantity}
+        />
+      ))}
     </BasketProductsStyled>
   );
 };
