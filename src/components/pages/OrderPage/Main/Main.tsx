@@ -5,6 +5,7 @@ import { theme } from "../../../../theme";
 import Admin from "./Admin/Admin";
 import EmptyMessageContainer from "./Admin/EmptyMessageContainer/EmptyMessageContainer";
 import MenuList from "./MenuList";
+import Basket from "./Basket/Basket";
 
 const Main = () => {
   const { isAdmin } = useAdminContext();
@@ -12,7 +13,7 @@ const Main = () => {
 
   return (
     <MainStyled>
-      <div className="basket"></div>
+      <Basket/>
       <div className="menu-and-admin">
         {products.length ? <MenuList /> : <EmptyMessageContainer />}
 
@@ -37,7 +38,4 @@ const MainStyled = styled.div`
     overflow: hidden;
   }
 
-  .basket {
-    background-color: red;
-  }
 `;
