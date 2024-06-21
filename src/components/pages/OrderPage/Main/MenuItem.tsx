@@ -1,5 +1,5 @@
 import { TiDelete } from "react-icons/ti";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
@@ -11,20 +11,61 @@ type MenuItemProps = {
   imageSource: string;
   title: string;
   price: string;
+  $selected: boolean;
+  $isAdmin: boolean;
 };
 
-const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
-  const { isAdmin } = useAdminContext();
-  const { handleDeleteProduct } = useProductContext();
+type MenuItemStyledType = {
+  $selected: boolean;
+  $isAdmin: boolean;
+};
 
-  const handleOnClick = (idToDelete: number) => {
+const MenuItem = ({
+  id,
+  imageSource,
+  title,
+  price,
+  $selected,
+  $isAdmin,
+}: MenuItemProps) => {
+  const {
+    isAdmin,
+    handleChangeSelectedTab,
+    handleChangeIsCollapse,
+    isCollapse,
+  } = useAdminContext();
+  const { handleDeleteProduct, handleSelectedProduct, inputTitleRef } =
+    useProductContext();
+
+  const handleOnDelete = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    idToDelete: number
+  ) => {
+    e.stopPropagation();
     handleDeleteProduct(idToDelete);
   };
 
+  const handleOnSelected = async (selectedProductId: number) => {
+    if (isAdmin) {
+      await handleSelectedProduct(selectedProductId);
+      await handleChangeSelectedTab("edit");
+      inputTitleRef.current?.focus();
+      if (!isCollapse) {
+        handleChangeIsCollapse();
+      }
+    }
+  };
+
   return (
-    <MenuItemStyled>
+    <MenuItemStyled
+      onClick={() => handleOnSelected(id)}
+      $selected={$selected}
+      $isAdmin={$isAdmin}
+    >
       {isAdmin && (
-        <TiDelete className="delete" onClick={() => handleOnClick(id)} />
+        <button className="delete" onClick={(e) => handleOnDelete(e, id)}>
+          <TiDelete  />
+        </button>
       )}
       <img
         src={imageSource ? imageSource : DEFAULT_IMAGE}
@@ -38,6 +79,7 @@ const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
           className="button-menuitem"
           $variant="primary"
           $size="full"
+          onClick={(e) => e.stopPropagation()}
         />
       </div>
     </MenuItemStyled>
@@ -46,7 +88,7 @@ const MenuItem = ({ id, imageSource, title, price }: MenuItemProps) => {
 
 export default MenuItem;
 
-const MenuItemStyled = styled.div`
+const MenuItemStyled = styled.div<MenuItemStyledType>`
   /* max-width: 300px; */
   height: 330px;
   padding: 20px;
@@ -57,6 +99,7 @@ const MenuItemStyled = styled.div`
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
   position: relative;
+  transition: background-color 0.2s, box-shadow 0.2s;
   img {
     max-width: 100%;
     height: 145px;
@@ -99,12 +142,59 @@ const MenuItemStyled = styled.div`
     right: 15px;
     top: 15px;
     font-size: 30px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
     color: ${theme.colors.primary};
     transition: color 0.2s;
     cursor: pointer;
 
     &:hover {
       color: ${theme.colors.red};
+    }
+  }
+
+  ${({ $selected }) => $selected && selectedProduct}
+  ${({ $isAdmin }) => $isAdmin && hoverProduct}
+  ${({ $isAdmin, $selected }) => $isAdmin && $selected && hoverButtonProduct}
+`;
+
+const selectedProduct = css`
+  background-color: ${theme.colors.primary};
+
+  .button-menuitem {
+    background-color: ${theme.colors.white};
+
+    span {
+      color: ${theme.colors.primary};
+    }
+  }
+
+  .delete,
+  .bottom .price {
+    color: ${theme.colors.white};
+  }
+`;
+
+const hoverProduct = css`
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 8px 0 ${theme.colors.primary};
+  }
+`;
+
+const hoverButtonProduct = css`
+  .button-menuitem {
+    &:hover {
+      border-color: ${theme.colors.white};
+      background-color: ${theme.colors.primary};
+      span {
+        color: ${theme.colors.white};
+      }
     }
   }
 `;

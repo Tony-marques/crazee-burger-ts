@@ -1,14 +1,11 @@
 import { FormEvent, useEffect, useState } from "react";
-import { BsFillCameraFill } from "react-icons/bs";
-import { FaHamburger } from "react-icons/fa";
 import { FiCheck } from "react-icons/fi";
-import { MdOutlineEuro } from "react-icons/md";
 import styled from "styled-components";
-import { useProductContext } from "../../../../../contexts/ProductContext";
-import { theme } from "../../../../../theme";
-import { ProductType } from "../../../../../types/ProductType";
-import Button from "../../../../common/Button/Button";
-import Input from "../../../../common/Input/Input";
+import { useProductContext } from "../../../../../../contexts/ProductContext";
+import { theme } from "../../../../../../theme";
+import { ProductType } from "../../../../../../types/ProductType";
+import Button from "../../../../../common/Button/Button";
+import AdminForm from "./AdminForm";
 
 const EMPTY_PRODUCT_FORM = {
   title: "",
@@ -16,7 +13,7 @@ const EMPTY_PRODUCT_FORM = {
   price: "",
 };
 
-const ProductForm = () => {
+const AddProductForm = () => {
   const [isMessageSuccess, setIsMessageSuccess] = useState(false);
 
   const { handleAddProduct, productForm, updateProductForm } =
@@ -58,78 +55,13 @@ const ProductForm = () => {
     setIsMessageSuccess(true);
   };
 
-  const inputsConfigs = [
-    {
-      id: 0,
-      type: "text",
-      placeholder: "Nom du produit (ex: Super Burger)",
-      onChange: handleOnChange,
-      value: productForm.title,
-      name: "title",
-      className: "input-product-form",
-      Icon: <FaHamburger />,
-      $variant: "secondary",
-    },
-    {
-      id: 1,
-      type: "text",
-      placeholder:
-        "Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)",
-      onChange: handleOnChange,
-      value: productForm.imageSource,
-      name: "imageSource",
-      className: "input-product-form",
-      Icon: <BsFillCameraFill />,
-      $variant: "secondary",
-    },
-    {
-      id: 2,
-      type: "text",
-      placeholder: "Prix",
-      onChange: handleOnChange,
-      value: productForm.price,
-      name: "price",
-      className: "input-product-form",
-      Icon: <MdOutlineEuro />,
-      $variant: "secondary",
-    },
-  ];
-
   return (
-    <ProductFormStyled>
-      <div className="image-preview">
-        {productForm.imageSource ? (
-          <img src={productForm.imageSource} alt="image preview" />
-        ) : (
-          <p>Aucune image</p>
-        )}
-      </div>
-      <form action="" onSubmit={handleOnSubmit}>
-        {inputsConfigs?.map(
-          ({
-            id,
-            type,
-            placeholder,
-            onChange,
-            value,
-            name,
-            className,
-            Icon,
-            $variant,
-          }) => (
-            <Input
-              key={id}
-              type={type}
-              placeholder={placeholder}
-              onChange={onChange}
-              value={value}
-              name={name}
-              className={className}
-              Icon={Icon}
-              $variant={$variant}
-            />
-          )
-        )}
+    <AddProductFormStyled>
+      <AdminForm
+        product={productForm}
+        onChange={handleOnChange}
+        onSubmit={handleOnSubmit}
+      >
         <div className="button-container">
           <Button
             label="ajouter un nouveau produit au menu"
@@ -144,27 +76,24 @@ const ProductForm = () => {
             </div>
           )}
         </div>
-      </form>
-    </ProductFormStyled>
+      </AdminForm>
+    </AddProductFormStyled>
   );
 };
 
-export default ProductForm;
+export default AddProductForm;
 
-const ProductFormStyled = styled.div`
+const AddProductFormStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
-  /* grid-template-columns: 215px 645px; */
   gap: 20px;
   justify-content: center;
-  /* align-items: center; */
   padding: 31px 71px;
 
   form {
-    /* border: 2px solid green; */
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: ${theme.spacing.xs};
   }
 
   .image-preview {
@@ -205,7 +134,7 @@ const ProductFormStyled = styled.div`
     gap: 15px;
     color: ${theme.colors.success};
     font-weight: 400;
-    font-size: 15px;
+    font-size: ${theme.fonts.size.SM};
 
     div {
       display: flex;
@@ -214,7 +143,7 @@ const ProductFormStyled = styled.div`
     }
 
     svg {
-      font-size: 18px;
+      font-size: ${theme.fonts.size.P1};
       border: 1px solid ${theme.colors.success};
       border-radius: ${theme.borderRadius.circle};
     }
