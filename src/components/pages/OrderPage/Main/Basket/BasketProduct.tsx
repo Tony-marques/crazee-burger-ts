@@ -1,6 +1,7 @@
 import { TbTrashXFilled } from "react-icons/tb";
 import styled from "styled-components";
 import { theme } from "../../../../../theme";
+import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
 
 type BasketProductProps = {
   imageUrl: string;
@@ -17,7 +18,7 @@ const BasketProduct = ({
 }: BasketProductProps) => {
   return (
     <BasketProductStyled>
-      <img src={imageUrl} alt="" />
+      <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
       <div className="product-informations">
         <div className="title">{title}</div>
         <div className="price">{price}</div>
@@ -35,7 +36,7 @@ export default BasketProduct;
 const BasketProductStyled = styled.div`
   padding: 8px 16px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   box-shadow: -4px 4px 15px 0px #00000033;
   background-color: ${theme.colors.white};
@@ -52,14 +53,19 @@ const BasketProductStyled = styled.div`
     width: 85px;
     height: 70px;
     object-fit: contain;
+    margin-right: 15px;
   }
 
   .product-informations {
+    width: 120px;
     .title {
       font-family: Amatic SC;
       font-size: 24px;
       font-weight: 700;
       color: ${theme.colors.dark};
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     .price {
@@ -75,6 +81,7 @@ const BasketProductStyled = styled.div`
     font-size: 15px;
     font-weight: 400;
     color: ${theme.colors.primary};
+    margin-left: 10px;
   }
 
   .remove-button {
@@ -91,10 +98,19 @@ const BasketProductStyled = styled.div`
     transition: width 0.2s;
     width: 0;
 
+    &:hover svg {
+      color: black;
+    }
+
+    &:active svg {
+      color: ${theme.colors.white};
+    }
+
     svg {
       color: ${theme.colors.white};
       width: 24px;
       height: 24px;
+      transition: color 0.2s;
     }
   }
 `;

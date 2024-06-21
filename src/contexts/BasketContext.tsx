@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { ProductType } from "../types/ProductType";
 
 type BasketContextProviderProps = {
@@ -8,6 +14,7 @@ type BasketContextProviderProps = {
 type BasketContextType = {
   basketProducts: ProductType[];
   handleAddProductInBasket: (productToAdd: ProductType) => void;
+  total: number;
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -16,6 +23,7 @@ export const BasketContextProvider = ({
   children,
 }: BasketContextProviderProps) => {
   const [basketProducts, setBasketProducts] = useState<ProductType[]>([]);
+  const [total, setTotal] = useState(0);
 
   const handleAddProductInBasket = (productToAdd: ProductType) => {
     const productIsAlreadyInBasket = basketProducts.find(
@@ -42,9 +50,22 @@ export const BasketContextProvider = ({
     setBasketProducts(basketProductsCopy);
   };
 
+  const totalMount = () => {
+    const totalPrice = basketProducts.reduce((acc, curr) => {
+      return acc + curr.quantity * curr.price;
+    }, total);
+
+    setTotal(totalPrice);
+  };
+
+  useEffect(() => {
+    totalMount();
+  }, [basketProducts]);
+
   const basketContextValue: BasketContextType = {
     basketProducts,
     handleAddProductInBasket,
+    total,
   };
 
   return (
