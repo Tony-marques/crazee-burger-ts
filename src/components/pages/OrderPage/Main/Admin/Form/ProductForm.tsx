@@ -4,11 +4,12 @@ import { FaHamburger } from "react-icons/fa";
 import { FiCheck } from "react-icons/fi";
 import { MdOutlineEuro } from "react-icons/md";
 import styled from "styled-components";
-import { useProductContext } from "../../../../../contexts/ProductContext";
-import { theme } from "../../../../../theme";
-import { ProductType } from "../../../../../types/ProductType";
-import Button from "../../../../common/Button/Button";
-import Input from "../../../../common/Input/Input";
+import { useProductContext } from "../../../../../../contexts/ProductContext";
+import { theme } from "../../../../../../theme";
+import { ProductType } from "../../../../../../types/ProductType";
+import Button from "../../../../../common/Button/Button";
+import Input from "../../../../../common/Input/Input";
+
 
 const EMPTY_PRODUCT_FORM = {
   title: "",

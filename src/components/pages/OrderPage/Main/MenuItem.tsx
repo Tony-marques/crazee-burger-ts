@@ -34,16 +34,22 @@ const MenuItem = ({
     handleChangeIsCollapse,
     isCollapse,
   } = useAdminContext();
-  const { handleDeleteProduct, handleSelectedProduct } = useProductContext();
+  const { handleDeleteProduct, handleSelectedProduct, inputTitleRef } =
+    useProductContext();
 
-  const handleOnDelete = (idToDelete: number) => {
+  const handleOnDelete = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    idToDelete: number
+  ) => {
+    e.stopPropagation();
     handleDeleteProduct(idToDelete);
   };
 
-  const handleOnSelected = (selectedProductId: number | undefined) => {
+  const handleOnSelected = async (selectedProductId: number) => {
     if (isAdmin) {
-      handleSelectedProduct(selectedProductId);
-      handleChangeSelectedTab("edit");
+      await handleSelectedProduct(selectedProductId);
+      await handleChangeSelectedTab("edit");
+      inputTitleRef.current?.focus();
       if (!isCollapse) {
         handleChangeIsCollapse();
       }
@@ -57,7 +63,9 @@ const MenuItem = ({
       $isAdmin={$isAdmin}
     >
       {isAdmin && (
-        <TiDelete className="delete" onClick={() => handleOnDelete(id)} />
+        <button className="delete" onClick={(e) => handleOnDelete(e, id)}>
+          <TiDelete  />
+        </button>
       )}
       <img
         src={imageSource ? imageSource : DEFAULT_IMAGE}
@@ -71,6 +79,7 @@ const MenuItem = ({
           className="button-menuitem"
           $variant="primary"
           $size="full"
+          onClick={(e) => e.stopPropagation()}
         />
       </div>
     </MenuItemStyled>
@@ -90,7 +99,7 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
   box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
   border-radius: ${theme.borderRadius.extraRound};
   position: relative;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   img {
     max-width: 100%;
     height: 145px;
@@ -133,6 +142,13 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
     right: 15px;
     top: 15px;
     font-size: 30px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: inherit;
     color: ${theme.colors.primary};
     transition: color 0.2s;
     cursor: pointer;
@@ -150,7 +166,7 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
 const selectedProduct = css`
   background-color: ${theme.colors.primary};
 
-  button {
+  .button-menuitem {
     background-color: ${theme.colors.white};
 
     span {
@@ -167,11 +183,12 @@ const selectedProduct = css`
 const hoverProduct = css`
   &:hover {
     cursor: pointer;
+    box-shadow: 0 0 8px 0 ${theme.colors.primary};
   }
 `;
 
 const hoverButtonProduct = css`
-  button {
+  .button-menuitem {
     &:hover {
       border-color: ${theme.colors.white};
       background-color: ${theme.colors.primary};

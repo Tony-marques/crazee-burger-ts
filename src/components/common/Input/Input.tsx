@@ -1,3 +1,4 @@
+import React from "react";
 import styled, { css } from "styled-components";
 import { theme } from "../../../theme";
 
@@ -17,14 +18,19 @@ type InputStyledType = {
   $variant: string;
 };
 
-const Input = ({ Icon, className, $variant, ...restProps }: InputProps) => {
-  return (
-    <InputStyled $variant={$variant} className={className}>
-      {Icon && Icon}
-      <input {...restProps} />
-    </InputStyled>
-  );
-};
+const Input = React.forwardRef(
+  (
+    { Icon, className, $variant, ...restProps }: InputProps,
+    ref: React.LegacyRef<HTMLInputElement>
+  ) => {
+    return (
+      <InputStyled $variant={$variant} className={className}>
+        {Icon && Icon}
+        <input {...restProps} ref={ref} />
+      </InputStyled>
+    );
+  }
+);
 
 export default Input;
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ProductForm from "./ProductForm";
+import ProductForm from "./Form/ProductForm";
 
 const AddPanel = () => {
   return (
@@ -11,5 +11,4 @@ const AddPanel = () => {
 
 export default AddPanel;
 
-const AddPanelStyled = styled.div`
-`;
+const AddPanelStyled = styled.div``;
