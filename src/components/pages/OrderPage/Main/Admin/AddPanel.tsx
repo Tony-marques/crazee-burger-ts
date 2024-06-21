@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import ProductForm from "./Form/ProductForm";
+import AddProductForm from "./Form/AddProductForm";
 
 const AddPanel = () => {
   return (
     <AddPanelStyled>
-      <ProductForm />
+      <AddProductForm />
     </AddPanelStyled>
   );
 };

@@ -33,7 +33,7 @@ type ProductContextType = {
   selectedProduct: ProductType;
   handleEditFormProduct: (productToEdit: ProductType) => void;
   handleEditProduct: (product: ProductType) => void;
-  inputTitleRef: React.RefObject<HTMLInputElement>;
+  inputTitleRef: React.RefObject<HTMLInputElement> ;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
