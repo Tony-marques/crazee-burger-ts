@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import EmptyBasketMessage from "./EmptyBasketMessage";
+import BasketProducts from "./BasketProducts";
 
 const BasketBody = () => {
   return (
     <BasketBodyStyled>
-      <EmptyBasketMessage />
+      {/* <EmptyBasketMessage /> */}
+      <BasketProducts />
     </BasketBodyStyled>
   );
 };
@@ -13,4 +14,7 @@ export default BasketBody;
 
 const BasketBodyStyled = styled.div`
   flex: 1;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
 `;
