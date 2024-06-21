@@ -5,6 +5,7 @@ import { theme } from "../../../../theme";
 import Admin from "./Admin/Admin";
 import EmptyMessageContainer from "./Admin/EmptyMessageContainer/EmptyMessageContainer";
 import MenuList from "./MenuList";
+import Basket from "./Basket/Basket";
 
 const Main = () => {
   const { isAdmin } = useAdminContext();
@@ -12,7 +13,7 @@ const Main = () => {
 
   return (
     <MainStyled>
-      {/* <div className="basket"></div> */}
+      <Basket/>
       <div className="menu-and-admin">
         {products.length ? <MenuList /> : <EmptyMessageContainer />}
 
@@ -30,14 +31,11 @@ const MainStyled = styled.div`
   flex: 1;
   overflow-y: hidden;
   display: grid;
-  /* grid-template-columns: 25% 1fr; */
-  grid-template-columns: 1fr;
-
+  grid-template-columns: 25% 1fr;
+  
   .menu-and-admin {
+    position: relative;
     overflow: hidden;
   }
 
-  .basket {
-    background-color: red;
-  }
 `;
