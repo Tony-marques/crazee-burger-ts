@@ -16,7 +16,7 @@ const Basket = () => {
 export default Basket;
 
 const BasketStyled = styled.div`
-  background-color: red;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 0px 20px 0px #00000033 inset;
 `;

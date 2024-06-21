@@ -1,12 +1,16 @@
 import styled from "styled-components";
+import EmptyBasketMessage from "./EmptyBasketMessage";
 
 const BasketBody = () => {
-  return <BasketBodyStyled>body</BasketBodyStyled>;
+  return (
+    <BasketBodyStyled>
+      <EmptyBasketMessage />
+    </BasketBodyStyled>
+  );
 };
 
 export default BasketBody;
 
 const BasketBodyStyled = styled.div`
-  background-color: purple;
   flex: 1;
 `;
