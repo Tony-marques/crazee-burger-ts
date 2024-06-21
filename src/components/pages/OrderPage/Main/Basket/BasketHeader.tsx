@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { theme } from "../../../../../theme";
+import { formatPrice } from "../../../../../utils/maths";
 
 const BasketHeader = () => {
   return (
     <BasketHeaderStyled>
       <div className="price-wrapper">
         <span className="total">total</span>
-        <span className="total-price">0.00 €</span>
+        <span className="total-price">{formatPrice(0)}</span>
       </div>
     </BasketHeaderStyled>
   );

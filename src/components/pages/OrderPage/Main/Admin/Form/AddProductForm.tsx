@@ -1,7 +1,8 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
 import { FiCheck } from "react-icons/fi";
 import styled from "styled-components";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
+import { useSuccessMessage } from "../../../../../../hooks/useSuccessMessage";
 import { theme } from "../../../../../../theme";
 import { ProductType } from "../../../../../../types/ProductType";
 import Button from "../../../../../common/Button/Button";
@@ -14,20 +15,9 @@ const EMPTY_PRODUCT_FORM = {
 };
 
 const AddProductForm = () => {
-  const [isMessageSuccess, setIsMessageSuccess] = useState(false);
-
   const { handleAddProduct, productForm, updateProductForm } =
     useProductContext();
-
-  useEffect(() => {
-    const i = setTimeout(() => {
-      setIsMessageSuccess(false);
-    }, 2000);
-
-    return () => {
-      clearInterval(i);
-    };
-  }, [isMessageSuccess]);
+  const { isMessageSuccess, displaySuccessMessage } = useSuccessMessage();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -52,7 +42,7 @@ const AddProductForm = () => {
 
     handleAddProduct(newProduct);
     updateProductForm(EMPTY_PRODUCT_FORM);
-    setIsMessageSuccess(true);
+    displaySuccessMessage();
   };
 
   return (
