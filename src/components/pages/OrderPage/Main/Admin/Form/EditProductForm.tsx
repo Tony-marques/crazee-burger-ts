@@ -2,12 +2,14 @@ import styled from "styled-components";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
 import { theme } from "../../../../../../theme";
 import AdminForm from "./AdminForm";
+import { useBasketContext } from "../../../../../../contexts/BasketContext";
 
 const EditProductForm = () => {
   const { inputTitleRef } = useProductContext();
 
   const { selectedProduct, handleEditProduct, handleEditFormProduct } =
     useProductContext();
+    const {handleEditProductInBasket} = useBasketContext()
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -17,6 +19,8 @@ const EditProductForm = () => {
 
     handleEditFormProduct(product);
     handleEditProduct(product);
+
+    handleEditProductInBasket(product)
   };
 
   return (

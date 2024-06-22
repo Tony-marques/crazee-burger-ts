@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useAdminContext } from "../../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../../utils/maths";
@@ -7,6 +8,8 @@ import BasketProduct from "./BasketProduct";
 const BasketProducts = () => {
   const { selectedProduct } = useProductContext();
   const { basketProducts } = useBasketContext();
+  const { isAdmin } = useAdminContext();
+
   return (
     <BasketProductsStyled>
       {basketProducts.map(({ imageSource, id, title, price, quantity }) => (
@@ -17,7 +20,10 @@ const BasketProducts = () => {
           price={formatPrice(price)}
           quantity={quantity}
           id={id}
-          $isSelected={id === selectedProduct.id}
+          $isSelected={
+            isAdmin && id === selectedProduct.id 
+          }
+          $isClickable={isAdmin}
         />
       ))}
     </BasketProductsStyled>

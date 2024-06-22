@@ -12,7 +12,7 @@ export type ProductFormType = {
   price: string;
 };
 
-const EMPTY_PRODUCT: ProductType = {
+export const EMPTY_PRODUCT: ProductType = {
   id: 0,
   imageSource: "",
   title: "",
@@ -66,7 +66,9 @@ export const ProductContextProvider = ({
   const handleAddProduct = (productToAdd: ProductType) => {
     const productsCopy = [...products];
 
-    setProducts([productToAdd, ...productsCopy]);
+    const updatedProducts = [productToAdd, ...productsCopy]
+
+    setProducts(updatedProducts);
   };
 
   const handleEditFormProduct = (product: ProductType) => {

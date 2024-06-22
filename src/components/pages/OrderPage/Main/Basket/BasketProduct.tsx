@@ -1,6 +1,8 @@
 import { TbTrashXFilled } from "react-icons/tb";
 import styled, { css } from "styled-components";
+import { useAdminContext } from "../../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../../contexts/BasketContext";
+import { useProductContext } from "../../../../../contexts/ProductContext";
 import { theme } from "../../../../../theme";
 import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
 
@@ -11,10 +13,12 @@ type BasketProductProps = {
   quantity: number;
   id: number;
   $isSelected: boolean;
+  $isClickable: boolean;
 };
 
 type BasketProductStyledType = {
   $isSelected: boolean;
+  $isClickable: boolean;
 };
 
 const BasketProduct = ({
@@ -24,23 +28,46 @@ const BasketProduct = ({
   quantity,
   id,
   $isSelected,
+  $isClickable,
 }: BasketProductProps) => {
   const { handleDeleteProductInBasket } = useBasketContext();
+  const { handleSelectedProduct, inputTitleRef } = useProductContext();
+  const {
+    handleChangeSelectedTab,
+    handleChangeIsCollapse,
+    isCollapse,
+    isAdmin,
+  } = useAdminContext();
 
-  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     handleDeleteProductInBasket(id);
   };
 
+  const handleOnSelected = async () => {
+    if (isAdmin) {
+      await handleSelectedProduct(id);
+      await handleChangeSelectedTab("edit");
+      inputTitleRef?.current?.focus()
+      if (!isCollapse) {
+        handleChangeIsCollapse();
+      }
+    }
+  };
+
   return (
-    <BasketProductStyled $isSelected={$isSelected}>
+    <BasketProductStyled
+      $isSelected={$isSelected}
+      $isClickable={$isClickable}
+      onClick={handleOnSelected}
+    >
       <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
       <div className="product-informations">
         <div className="title">{title}</div>
         <div className="price">{price}</div>
       </div>
       <div className="quantities">x {quantity}</div>
-      <button className="remove-button" onClick={handleOnClick}>
+      <button className="remove-button" onClick={handleOnDelete}>
         <TbTrashXFilled />
       </button>
     </BasketProductStyled>
@@ -129,9 +156,23 @@ const BasketProductStyled = styled.div<BasketProductStyledType>`
     }
   }
 
-  ${({ $isSelected }) => $isSelected && isSelected}
+  ${({ $isSelected }) => $isSelected && selected}
+  ${({ $isClickable }) => $isClickable && clickable}
 `;
 
-const isSelected = css`
+const selected = css`
   background-color: ${theme.colors.primary};
+
+  .product-informations {
+    .price {
+      color: ${theme.colors.white};
+    }
+  }
+  .quantities {
+    color: ${theme.colors.white};
+  }
+`;
+
+const clickable = css`
+  cursor: pointer;
 `;
