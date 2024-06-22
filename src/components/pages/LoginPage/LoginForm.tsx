@@ -4,6 +4,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { authenticateUser } from "../../../api/user";
 import { theme } from "../../../theme";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
@@ -18,6 +19,9 @@ const LoginForm = () => {
 
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    authenticateUser(name);
+
     setName("");
     navigate(`/order/${name}`);
   };
