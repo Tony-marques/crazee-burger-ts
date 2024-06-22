@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import { FiCheck } from "react-icons/fi";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
 import { useSuccessMessage } from "../../../../../../hooks/useSuccessMessage";
@@ -18,6 +19,7 @@ const AddProductForm = () => {
   const { handleAddProduct, productForm, updateProductForm } =
     useProductContext();
   const { isMessageSuccess, displaySuccessMessage } = useSuccessMessage();
+  const { name } = useParams();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -40,7 +42,7 @@ const AddProductForm = () => {
       price: Number(productForm.price),
     };
 
-    handleAddProduct(newProduct);
+    handleAddProduct(newProduct, name);
     updateProductForm(EMPTY_PRODUCT_FORM);
     displaySuccessMessage();
   };

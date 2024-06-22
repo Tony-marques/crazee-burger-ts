@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import { syncBothMenus } from "../api/product";
 import { fakeMenu } from "../fakeData/fakeMenu";
 import { ProductType } from "../types/ProductType";
 
@@ -24,7 +25,10 @@ export const EMPTY_PRODUCT: ProductType = {
 
 type ProductContextType = {
   products: ProductType[];
-  handleAddProduct: (productToAdd: ProductType) => void;
+  handleAddProduct: (
+    productToAdd: ProductType,
+    name: string | undefined
+  ) => void;
   handleDeleteProduct: (idToProductDelete: number) => void;
   handleResetProducts: () => void;
   productForm: ProductFormType;
@@ -33,7 +37,7 @@ type ProductContextType = {
   selectedProduct: ProductType;
   handleEditFormProduct: (productToEdit: ProductType) => void;
   handleEditProduct: (product: ProductType) => void;
-  inputTitleRef: React.RefObject<HTMLInputElement> ;
+  inputTitleRef: React.RefObject<HTMLInputElement>;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -63,12 +67,17 @@ export const ProductContextProvider = ({
     setProductForm(productToUpdate);
   };
 
-  const handleAddProduct = (productToAdd: ProductType) => {
+  const handleAddProduct = (
+    productToAdd: ProductType,
+    name: string | undefined
+  ) => {
     const productsCopy = [...products];
 
-    const updatedProducts = [productToAdd, ...productsCopy]
+    const updatedProducts = [productToAdd, ...productsCopy];
 
     setProducts(updatedProducts);
+
+    syncBothMenus(name, updatedProducts);
   };
 
   const handleEditFormProduct = (product: ProductType) => {
