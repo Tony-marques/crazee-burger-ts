@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useBasketContext } from "../../../../../contexts/BasketContext";
+import { useProductContext } from "../../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../../utils/maths";
 import BasketProduct from "./BasketProduct";
 
 const BasketProducts = () => {
+  const { selectedProduct } = useProductContext();
   const { basketProducts } = useBasketContext();
   return (
     <BasketProductsStyled>
@@ -14,6 +16,8 @@ const BasketProducts = () => {
           title={title}
           price={formatPrice(price)}
           quantity={quantity}
+          id={id}
+          $isSelected={id === selectedProduct.id}
         />
       ))}
     </BasketProductsStyled>

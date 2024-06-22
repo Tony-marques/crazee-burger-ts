@@ -42,6 +42,7 @@ const MenuItem = ({
     products,
   } = useProductContext();
   const { handleAddProductInBasket } = useBasketContext();
+  const { handleDeleteProductInBasket, basketProducts } = useBasketContext();
 
   const handleOnDelete = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -49,6 +50,15 @@ const MenuItem = ({
   ) => {
     e.stopPropagation();
     handleDeleteProduct(idToDelete);
+
+    const productAlreadyInBasket = basketProducts.find(
+      (product) => product.id === idToDelete
+    );
+
+    if (productAlreadyInBasket) {
+      console.log(productAlreadyInBasket);
+      handleDeleteProductInBasket(idToDelete);
+    }
   };
 
   const handleOnSelected = async (selectedProductId: number) => {

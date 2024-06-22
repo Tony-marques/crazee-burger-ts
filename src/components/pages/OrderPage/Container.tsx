@@ -19,6 +19,7 @@ export default Container;
 const ContainerStyled = styled.div`
   width: 1400px;
   height: 932px;
+  max-height: 95vh;
   display: flex;
   flex-direction: column;
   border-radius: 15px;

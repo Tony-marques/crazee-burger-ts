@@ -1,5 +1,6 @@
 import { TbTrashXFilled } from "react-icons/tb";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { useBasketContext } from "../../../../../contexts/BasketContext";
 import { theme } from "../../../../../theme";
 import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
 
@@ -8,6 +9,12 @@ type BasketProductProps = {
   title: string;
   price: string;
   quantity: number;
+  id: number;
+  $isSelected: boolean;
+};
+
+type BasketProductStyledType = {
+  $isSelected: boolean;
 };
 
 const BasketProduct = ({
@@ -15,16 +22,25 @@ const BasketProduct = ({
   title,
   price,
   quantity,
+  id,
+  $isSelected,
 }: BasketProductProps) => {
+  const { handleDeleteProductInBasket } = useBasketContext();
+
+  const handleOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    handleDeleteProductInBasket(id);
+  };
+
   return (
-    <BasketProductStyled>
+    <BasketProductStyled $isSelected={$isSelected}>
       <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
       <div className="product-informations">
         <div className="title">{title}</div>
         <div className="price">{price}</div>
       </div>
       <div className="quantities">x {quantity}</div>
-      <button className="remove-button">
+      <button className="remove-button" onClick={handleOnClick}>
         <TbTrashXFilled />
       </button>
     </BasketProductStyled>
@@ -33,10 +49,9 @@ const BasketProduct = ({
 
 export default BasketProduct;
 
-const BasketProductStyled = styled.div`
+const BasketProductStyled = styled.div<BasketProductStyledType>`
   padding: 8px 16px;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   box-shadow: -4px 4px 15px 0px #00000033;
   background-color: ${theme.colors.white};
@@ -113,4 +128,10 @@ const BasketProductStyled = styled.div`
       transition: color 0.2s;
     }
   }
+
+  ${({ $isSelected }) => $isSelected && isSelected}
+`;
+
+const isSelected = css`
+  background-color: ${theme.colors.primary};
 `;

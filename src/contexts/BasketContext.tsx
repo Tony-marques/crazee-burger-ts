@@ -15,6 +15,7 @@ type BasketContextType = {
   basketProducts: ProductType[];
   handleAddProductInBasket: (productToAdd: ProductType) => void;
   total: number;
+  handleDeleteProductInBasket: (productIdToDelete: number) => void;
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -50,10 +51,23 @@ export const BasketContextProvider = ({
     setBasketProducts(basketProductsCopy);
   };
 
+  const handleDeleteProductInBasket = (productIdToDelete: number) => {
+    const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
+
+    const updatedProducts = basketProductsCopy.filter(
+      (product: ProductType) => product.id !== productIdToDelete
+    );
+
+    setBasketProducts(updatedProducts);
+  };
+
   const totalMount = () => {
-    const totalPrice = basketProducts.reduce((acc, curr) => {
-      return acc + curr.quantity * curr.price;
-    }, total);
+    const totalPrice = basketProducts.reduce((total, basketProduct) => {
+      if (isNaN(basketProduct.price)) {
+        return total;
+      }
+      return total + basketProduct.quantity * basketProduct.price;
+    }, 0);
 
     setTotal(totalPrice);
   };
@@ -66,6 +80,7 @@ export const BasketContextProvider = ({
     basketProducts,
     handleAddProductInBasket,
     total,
+    handleDeleteProductInBasket,
   };
 
   return (

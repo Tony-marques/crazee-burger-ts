@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import { useBasketContext } from "../../../../../contexts/BasketContext";
 import BasketProducts from "./BasketProducts";
+import EmptyBasketMessage from "./EmptyBasketMessage";
 
 const BasketBody = () => {
+  const { basketProducts } = useBasketContext();
   return (
     <BasketBodyStyled>
-      {/* <EmptyBasketMessage /> */}
-      <BasketProducts />
+      {basketProducts.length > 0 && <BasketProducts />}
+      {basketProducts.length <= 0 && <EmptyBasketMessage />}
     </BasketBodyStyled>
   );
 };
