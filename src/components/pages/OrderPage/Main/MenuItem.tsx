@@ -1,6 +1,7 @@
 import { TiDelete } from "react-icons/ti";
 import styled, { css } from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
+import { useBasketContext } from "../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
 import Button from "../../../common/Button/Button";
@@ -34,8 +35,14 @@ const MenuItem = ({
     handleChangeIsCollapse,
     isCollapse,
   } = useAdminContext();
-  const { handleDeleteProduct, handleSelectedProduct, inputTitleRef } =
-    useProductContext();
+  const {
+    handleDeleteProduct,
+    handleSelectedProduct,
+    inputTitleRef,
+    products,
+  } = useProductContext();
+  const { handleAddProductInBasket } = useBasketContext();
+  const { handleDeleteProductInBasket, basketProducts } = useBasketContext();
 
   const handleOnDelete = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -43,6 +50,15 @@ const MenuItem = ({
   ) => {
     e.stopPropagation();
     handleDeleteProduct(idToDelete);
+
+    const productAlreadyInBasket = basketProducts.find(
+      (product) => product.id === idToDelete
+    );
+
+    if (productAlreadyInBasket) {
+      console.log(productAlreadyInBasket);
+      handleDeleteProductInBasket(idToDelete);
+    }
   };
 
   const handleOnSelected = async (selectedProductId: number) => {
@@ -56,6 +72,16 @@ const MenuItem = ({
     }
   };
 
+  const handleOnAdd = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+
+    const productToAdd = products.find((product) => product.id === id);
+
+    if (productToAdd) {
+      handleAddProductInBasket(productToAdd);
+    }
+  };
+
   return (
     <MenuItemStyled
       onClick={() => handleOnSelected(id)}
@@ -64,7 +90,7 @@ const MenuItem = ({
     >
       {isAdmin && (
         <button className="delete" onClick={(e) => handleOnDelete(e, id)}>
-          <TiDelete  />
+          <TiDelete />
         </button>
       )}
       <img
@@ -79,7 +105,7 @@ const MenuItem = ({
           className="button-menuitem"
           $variant="primary"
           $size="full"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => handleOnAdd(e)}
         />
       </div>
     </MenuItemStyled>

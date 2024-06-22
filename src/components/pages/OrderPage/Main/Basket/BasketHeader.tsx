@@ -1,13 +1,15 @@
 import styled from "styled-components";
+import { useBasketContext } from "../../../../../contexts/BasketContext";
 import { theme } from "../../../../../theme";
 import { formatPrice } from "../../../../../utils/maths";
 
 const BasketHeader = () => {
+  const { total } = useBasketContext();
   return (
     <BasketHeaderStyled>
       <div className="price-wrapper">
         <span className="total">total</span>
-        <span className="total-price">{formatPrice(0)}</span>
+        <span className="total-price">{formatPrice(total)}</span>
       </div>
     </BasketHeaderStyled>
   );
