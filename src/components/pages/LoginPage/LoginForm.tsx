@@ -12,15 +12,17 @@ import Input from "../../common/Input/Input";
 const LoginForm = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  // const { handleUsername } = useProductContext();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handleOnSubmit = (e: FormEvent) => {
+  const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    authenticateUser(name);
+    await authenticateUser(name);
+    // await handleUsername(name);
 
     setName("");
     navigate(`/order/${name}`);

@@ -29,7 +29,10 @@ type ProductContextType = {
     productToAdd: ProductType,
     name: string | undefined
   ) => void;
-  handleDeleteProduct: (idToProductDelete: number) => void;
+  handleDeleteProduct: (
+    idToProductDelete: number,
+    name: string | undefined
+  ) => void;
   handleResetProducts: () => void;
   productForm: ProductFormType;
   updateProductForm: (productToUpdate: ProductFormType) => void;
@@ -38,6 +41,7 @@ type ProductContextType = {
   handleEditFormProduct: (productToEdit: ProductType) => void;
   handleEditProduct: (product: ProductType) => void;
   inputTitleRef: React.RefObject<HTMLInputElement>;
+  // handleUsername: (newName: string) => void;
 };
 
 const ProductContext = createContext<ProductContextType | null>(null);
@@ -45,6 +49,24 @@ const ProductContext = createContext<ProductContextType | null>(null);
 export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
+  // const [username, setUsername] = useState("");
+
+  // const getProducts = async () => {
+  //   const menu: ProductType[] = await getMenu(username);
+  //   // console.log(username);
+
+  //   setProducts(menu);
+  //   console.log(products);
+
+  // };
+
+  // useEffect(() => {
+  //   console.log("useeffect productectcontext");
+
+  //   getProducts();
+
+  // }, [username]);
+
   const [products, setProducts] = useState<ProductType[]>(fakeMenu.LARGE);
 
   const [selectedProduct, setSelectedProduct] =
@@ -62,6 +84,12 @@ export const ProductContextProvider = ({
       setSelectedProduct(product);
     }
   };
+
+  // console.log(username);
+
+  // const handleUsername = (newName: string) => {
+  //   setUsername(newName);
+  // };
 
   const updateProductForm = (productToUpdate: ProductFormType) => {
     setProductForm(productToUpdate);
@@ -94,7 +122,10 @@ export const ProductContextProvider = ({
     setProducts(productsCopy);
   };
 
-  const handleDeleteProduct = (idToProductDelete: number) => {
+  const handleDeleteProduct = (
+    idToProductDelete: number,
+    name: string | undefined
+  ) => {
     const productsCopy = [...products];
     const filteredProducts = productsCopy.filter(
       (product) => product.id !== idToProductDelete
@@ -103,6 +134,8 @@ export const ProductContextProvider = ({
     setProducts(filteredProducts);
     selectedProduct.id === idToProductDelete &&
       setSelectedProduct(EMPTY_PRODUCT);
+
+    syncBothMenus(name, filteredProducts);
   };
 
   const handleResetProducts = () => {
@@ -116,12 +149,13 @@ export const ProductContextProvider = ({
     handleResetProducts,
     productForm,
     updateProductForm,
-
     handleSelectedProduct,
     selectedProduct,
     handleEditFormProduct,
     handleEditProduct,
     inputTitleRef,
+    // handleUsername,
+    // username,
   };
 
   return (

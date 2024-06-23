@@ -3,6 +3,15 @@ import { theme } from "../../../theme";
 import Container from "./Container";
 
 const OrderPage = () => {
+  // const { handleUsername, username } = useProductContext();
+  // const { name } = useParams();
+
+  // useEffect(() => {
+  //   handleUsername(name);
+  //   console.log("useeffect orderpage");
+  //   console.log(username);
+  // }, []);
+
   return (
     <OrderPageStyled>
       <Container />

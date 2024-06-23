@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { ProductType } from "../types/ProductType";
 import { db } from "./firebase-config";
 
@@ -23,4 +23,20 @@ export const syncBothMenus = (
   };
 
   setDoc(docRef, newDoc);
+};
+
+export const getMenu = async (
+  userId: string
+): Promise<ProductType[] | undefined> => {
+  const docRef = doc(db, "users", userId);
+
+  const docSnapshot = await getDoc(docRef);
+  // console.log("menu1");
+
+  if (docSnapshot.exists()) {
+    const { menu } = docSnapshot.data();
+    console.log(menu);
+
+    return menu;
+  }
 };
