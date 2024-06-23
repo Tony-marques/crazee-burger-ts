@@ -8,6 +8,18 @@ export const router = createBrowserRouter([
     path: "/",
     element: <LoginPage />,
   },
+  // {
+  //   path: "/order/:name",
+  //   element: (
+  //     <ProductContextProvider>
+  //       <BasketContextProvider>
+  //         <AdminContextProvider>
+  //           <OrderPage />
+  //         </AdminContextProvider>
+  //       </BasketContextProvider>
+  //     </ProductContextProvider>
+  //   ),
+  // },
   {
     path: "/order/:name",
     element: <OrderPage />,

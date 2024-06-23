@@ -4,6 +4,7 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { authenticateUser } from "../../../api/user";
 import { theme } from "../../../theme";
 import Button from "../../common/Button/Button";
 import Input from "../../common/Input/Input";
@@ -11,13 +12,18 @@ import Input from "../../common/Input/Input";
 const LoginForm = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  // const { handleUsername } = useProductContext();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handleOnSubmit = (e: FormEvent) => {
+  const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    await authenticateUser(name);
+    // await handleUsername(name);
+
     setName("");
     navigate(`/order/${name}`);
   };

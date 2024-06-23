@@ -15,7 +15,7 @@ const Main = () => {
     <MainStyled>
       <Basket/>
       <div className="menu-and-admin">
-        {products.length ? <MenuList /> : <EmptyMessageContainer />}
+        {products?.length ? <MenuList /> : <EmptyMessageContainer />}
 
         {isAdmin && <Admin />}
       </div>

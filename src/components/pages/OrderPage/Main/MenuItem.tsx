@@ -1,4 +1,5 @@
 import { TiDelete } from "react-icons/ti";
+import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../contexts/BasketContext";
@@ -41,6 +42,7 @@ const MenuItem = ({
     inputTitleRef,
     products,
   } = useProductContext();
+  const { name } = useParams();
   const { handleAddProductInBasket } = useBasketContext();
   const { handleDeleteProductInBasket, basketProducts } = useBasketContext();
 
@@ -49,14 +51,13 @@ const MenuItem = ({
     idToDelete: number
   ) => {
     e.stopPropagation();
-    handleDeleteProduct(idToDelete);
+    handleDeleteProduct(idToDelete, name);
 
     const productAlreadyInBasket = basketProducts.find(
       (product) => product.id === idToDelete
     );
 
     if (productAlreadyInBasket) {
-      console.log(productAlreadyInBasket);
       handleDeleteProductInBasket(idToDelete);
     }
   };

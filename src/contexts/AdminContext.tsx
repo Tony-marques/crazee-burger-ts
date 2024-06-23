@@ -26,6 +26,7 @@ export const AdminContextProvider = ({
     setSelectedTab(newValue);
   };
 
+
   const handleChangeIsCollapse = () => {
     setIsCollapse((prev) => !prev);
   };
@@ -34,10 +35,6 @@ export const AdminContextProvider = ({
     setIsAdmin((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   setIsCollapse(false);
-  // }, [isAdmin]);
-
   const AdminContextValue: AdminContextType = {
     selectedTab,
     handleChangeSelectedTab,
@@ -45,6 +42,7 @@ export const AdminContextProvider = ({
     handleChangeIsCollapse,
     isAdmin,
     handleChangeIsAdmin,
+
   };
 
   return (
