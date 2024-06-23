@@ -7,6 +7,7 @@ import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
 import Button from "../../../common/Button/Button";
 import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
+import { fadeInFromRight } from "../../../../theme/animations";
 
 type MenuItemProps = {
   id: number;
@@ -90,9 +91,13 @@ const MenuItem = ({
       $isAdmin={$isAdmin}
     >
       {isAdmin && (
+        // <TransitionGroup>
+        //   <CSSTransition >
         <button className="delete" onClick={(e) => handleOnDelete(e, id)}>
           <TiDelete />
         </button>
+        //</CSSTransition>
+        //</TransitionGroup>
       )}
       <img
         src={imageSource ? imageSource : DEFAULT_IMAGE}
@@ -179,6 +184,7 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
     color: ${theme.colors.primary};
     transition: color 0.2s;
     cursor: pointer;
+    animation: ${fadeInFromRight} 500ms ease-out;
 
     &:hover {
       color: ${theme.colors.red};
