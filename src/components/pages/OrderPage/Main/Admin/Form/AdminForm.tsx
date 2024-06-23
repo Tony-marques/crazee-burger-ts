@@ -13,7 +13,6 @@ type InputsConfigsType = {
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   value: string;
   name: string;
-  className: string;
   Icon: JSX.Element;
   $variant: "secondary" | "primary";
 };
@@ -40,7 +39,6 @@ const AdminForm = React.forwardRef(
         onChange: onChange,
         value: product.title,
         name: "title",
-        className: "input-product-form",
         Icon: <FaHamburger />,
         $variant: "secondary",
       },
@@ -52,7 +50,6 @@ const AdminForm = React.forwardRef(
         onChange: onChange,
         value: product.imageSource,
         name: "imageSource",
-        className: "input-product-form",
         Icon: <BsFillCameraFill />,
         $variant: "secondary",
       },
@@ -63,7 +60,6 @@ const AdminForm = React.forwardRef(
         onChange: onChange,
         value: product.price,
         name: "price",
-        className: "input-product-form",
         Icon: <MdOutlineEuro />,
         $variant: "secondary",
       },
@@ -87,7 +83,6 @@ const AdminForm = React.forwardRef(
               onChange,
               value,
               name,
-              className,
               Icon,
               $variant,
             }) => (
@@ -98,7 +93,6 @@ const AdminForm = React.forwardRef(
                 onChange={onChange}
                 value={value}
                 name={name}
-                className={className}
                 Icon={Icon}
                 $variant={$variant}
                 ref={ref && name === "title" ? ref : null}

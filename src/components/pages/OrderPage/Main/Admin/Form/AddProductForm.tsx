@@ -80,7 +80,10 @@ const AddProductFormStyled = styled.div`
   grid-template-columns: 1fr 3fr;
   gap: 20px;
   justify-content: center;
-  padding: 31px 71px;
+  padding-top: 31px;
+  padding-left: 71px;
+  border: 1px solid red;
+  width: 70%;
 
   form {
     display: flex;
@@ -89,8 +92,8 @@ const AddProductFormStyled = styled.div`
   }
 
   .image-preview {
-    width: 215px;
-    height: 120px;
+    width: 160px;
+    height: 133px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,10 +118,6 @@ const AddProductFormStyled = styled.div`
 
   .button-product-form {
     padding: 10px 29px;
-  }
-
-  .input-product-form {
-    padding: 8px 24px;
   }
 
   .button-container {
