@@ -1,4 +1,5 @@
 import { TbTrashXFilled } from "react-icons/tb";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styled, { css } from "styled-components";
 import { useAdminContext } from "../../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../../contexts/BasketContext";
@@ -48,7 +49,7 @@ const BasketProduct = ({
     if (isAdmin) {
       await handleSelectedProduct(id);
       await handleChangeSelectedTab("edit");
-      inputTitleRef?.current?.focus()
+      inputTitleRef?.current?.focus();
       if (!isCollapse) {
         handleChangeIsCollapse();
       }
@@ -66,7 +67,17 @@ const BasketProduct = ({
         <div className="title">{title}</div>
         <div className="price">{price}</div>
       </div>
-      <div className="quantities">x {quantity}</div>
+      <div className="quantity">
+        <TransitionGroup>
+          <CSSTransition
+            key={quantity}
+            classNames={"animated-quantities"}
+            timeout={300}
+          >
+            <div className="quantities">x {quantity}</div>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
       <button className="remove-button" onClick={handleOnDelete}>
         <TbTrashXFilled />
       </button>
@@ -124,6 +135,7 @@ const BasketProductStyled = styled.div<BasketProductStyledType>`
     font-weight: 400;
     color: ${theme.colors.primary};
     margin-left: 10px;
+    display: inline-block;
   }
 
   .remove-button {
@@ -154,6 +166,50 @@ const BasketProductStyled = styled.div<BasketProductStyledType>`
       height: 24px;
       transition: color 0.2s;
     }
+
+    /* span {
+      display: inline-block;
+    } */
+
+    .count-animated-enter {
+      transform: translateY(100%);
+    }
+    .count-animated-enter-active {
+      transition: 0.3s;
+      transform: translateY(0);
+    }
+
+    .count-animated-exit {
+      transform: translateY(0);
+      position: absolute;
+      right: 0;
+    }
+    .count-animated-exit-active {
+      transition: 0.3s;
+      transform: translateY(-100%);
+    }
+  }
+
+  .animated-quantities-enter {
+    transform: translateY(100%);
+  }
+  .animated-quantities-enter-active {
+    transform: translateY(0);
+  }
+
+  .animated-quantities-exit {
+    transform: translateY(0);
+    position: absolute;
+    right: 0;
+  }
+  .animated-quantities-exit-active {
+    transition: 0.3s;
+    transform: translateY(-100%);
+  }
+
+  .quantity {
+    position: relative;
+    overflow: hidden;
   }
 
   ${({ $isSelected }) => $isSelected && selected}

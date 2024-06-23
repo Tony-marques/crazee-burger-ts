@@ -1,26 +1,36 @@
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styled from "styled-components";
+import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { formatPrice } from "../../../../utils/maths";
 import MenuItem from "./MenuItem";
-import { useAdminContext } from "../../../../contexts/AdminContext";
+import { menuAnimation } from "../../../../theme/animations";
 
 const MenuList = () => {
-  const {isAdmin} = useAdminContext()
+  const { isAdmin } = useAdminContext();
   const { products, selectedProduct } = useProductContext();
 
   return (
     <MenuListStyled>
-      {products?.map(({ id, title, imageSource, price }) => (
-        <MenuItem
-          id={id}
-          key={id}
-          imageSource={imageSource}
-          title={title}
-          price={formatPrice(price)}
-          $selected={isAdmin && selectedProduct.id === id}
-          $isAdmin={isAdmin}
-        />
-      ))}
+      <TransitionGroup component={null}>
+        {products?.map(({ id, title, imageSource, price }) => (
+          <CSSTransition
+            classNames={"menuitem-animated"}
+            key={id}
+            timeout={300}
+          >
+            <MenuItem
+              id={id}
+              key={id}
+              imageSource={imageSource}
+              title={title}
+              price={formatPrice(price)}
+              $selected={isAdmin && selectedProduct.id === id}
+              $isAdmin={isAdmin}
+            />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
     </MenuListStyled>
   );
 };
@@ -38,4 +48,6 @@ const MenuListStyled = styled.div`
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
   background: #f5f5f7;
   padding: 50px 50px 300px;
+
+  ${menuAnimation}
 `;

@@ -48,8 +48,7 @@ const TabsStyled = styled.div`
   display: flex;
   gap: 1px;
   padding-left: 71px;
-  position: absolute;
-  top: -43px;
+  position: relative;
 
   .is-selected {
     background-color: ${theme.colors.background_dark};

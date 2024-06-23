@@ -1,11 +1,13 @@
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styled from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
+import { adminAnimations } from "../../../../theme/animations";
 import Admin from "./Admin/Admin";
 import EmptyMessageContainer from "./Admin/EmptyMessageContainer/EmptyMessageContainer";
-import MenuList from "./MenuList";
 import Basket from "./Basket/Basket";
+import MenuList from "./MenuList";
 
 const Main = () => {
   const { isAdmin } = useAdminContext();
@@ -13,11 +15,23 @@ const Main = () => {
 
   return (
     <MainStyled>
-      <Basket/>
+      <Basket />
       <div className="menu-and-admin">
         {products?.length ? <MenuList /> : <EmptyMessageContainer />}
 
-        {isAdmin && <Admin />}
+        {isAdmin && (
+          <TransitionGroup component={null}>
+            <CSSTransition
+              appear={true}
+              timeout={500}
+              classNames={"admin-animated"}
+              unmountOnExit
+              // key={}
+            >
+              <Admin />
+            </CSSTransition>
+          </TransitionGroup>
+        )}
       </div>
     </MainStyled>
   );
@@ -32,10 +46,11 @@ const MainStyled = styled.div`
   overflow-y: hidden;
   display: grid;
   grid-template-columns: 25% 1fr;
-  
+
   .menu-and-admin {
     position: relative;
     overflow: hidden;
   }
 
+  ${adminAnimations}
 `;

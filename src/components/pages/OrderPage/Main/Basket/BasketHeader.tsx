@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useBasketContext } from "../../../../../contexts/BasketContext";
 import { theme } from "../../../../../theme";
 import { formatPrice } from "../../../../../utils/maths";
+import CasinoEffect from "../../../../common/CasinoEffect/CasinoEffect";
 
 const BasketHeader = () => {
   const { total } = useBasketContext();
@@ -9,7 +10,8 @@ const BasketHeader = () => {
     <BasketHeaderStyled>
       <div className="price-wrapper">
         <span className="total">total</span>
-        <span className="total-price">{formatPrice(total)}</span>
+        {/* <span className="total-price">{formatPrice(total)}</span> */}
+        <CasinoEffect count={formatPrice(total)} />
       </div>
     </BasketHeaderStyled>
   );

@@ -21,4 +21,5 @@ const AdminStyled = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column;
+
 `;
