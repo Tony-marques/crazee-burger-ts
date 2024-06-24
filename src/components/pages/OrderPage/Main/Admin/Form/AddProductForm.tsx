@@ -2,18 +2,15 @@ import { FormEvent } from "react";
 import { FiCheck } from "react-icons/fi";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useProductContext } from "../../../../../../contexts/ProductContext";
+import {
+  EMPTY_PRODUCT,
+  useProductContext,
+} from "../../../../../../contexts/ProductContext";
 import { useSuccessMessage } from "../../../../../../hooks/useSuccessMessage";
 import { theme } from "../../../../../../theme";
 import { ProductType } from "../../../../../../types/ProductType";
 import Button from "../../../../../common/Button/Button";
 import AdminForm from "./AdminForm";
-
-const EMPTY_PRODUCT_FORM = {
-  title: "",
-  imageSource: "",
-  price: "",
-};
 
 const AddProductForm = () => {
   const { handleAddProduct, productForm, updateProductForm } =
@@ -37,13 +34,33 @@ const AddProductForm = () => {
       ...productForm,
       id: new Date().getTime(),
       quantity: 0,
-      isAvailable: true,
-      isAdvertised: true,
+      isAvailable:
+        productForm.isAvailable === true
+          ? true
+          : productForm.isAvailable === false
+          ? false
+          : productForm.isAvailable === "true"
+          ? true
+          : productForm.isAvailable === "false"
+          ? false
+          : false,
+      isAdvertised:
+        productForm.isAdvertised === true
+          ? true
+          : productForm.isAdvertised === false
+          ? false
+          : productForm.isAdvertised === "true"
+          ? true
+          : productForm.isAdvertised === "false"
+          ? false
+          : false,
       price: Number(productForm.price),
     };
 
+    console.log(newProduct);
+
     handleAddProduct(newProduct, name);
-    updateProductForm(EMPTY_PRODUCT_FORM);
+    updateProductForm(EMPTY_PRODUCT);
     displaySuccessMessage();
   };
 
@@ -78,6 +95,7 @@ export default AddProductForm;
 const AddProductFormStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(4, 1fr);
   gap: 20px;
   justify-content: center;
   padding-top: 31px;
@@ -89,14 +107,15 @@ const AddProductFormStyled = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.xs};
+    grid-area: 1/2/5/3;
   }
 
   .image-preview {
-    width: 160px;
-    height: 133px;
+
     display: flex;
     justify-content: center;
     align-items: center;
+    grid-area: 1/1/4/2;
 
     p {
       color: ${theme.colors.greySemiDark};
