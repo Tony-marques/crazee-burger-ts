@@ -9,6 +9,7 @@ type InputProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value: string;
   name: string;
+  className: string;
   Icon?: JSX.Element;
   $variant: "primary" | "secondary";
 };
@@ -19,11 +20,11 @@ type InputStyledType = {
 
 const Input = React.forwardRef(
   (
-    { Icon, $variant, ...restProps }: InputProps,
+    { Icon, $variant, className, ...restProps }: InputProps,
     ref: React.LegacyRef<HTMLInputElement>
   ) => {
     return (
-      <InputStyled $variant={$variant}>
+      <InputStyled $variant={$variant} className={className}>
         {Icon && Icon}
         <input {...restProps} ref={ref} />
       </InputStyled>
@@ -35,21 +36,19 @@ export default Input;
 
 const InputStyled = styled.div<InputStyledType>`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
   border-radius: ${theme.borderRadius.round};
   background-color: ${theme.colors.white};
-  /* border: 2px solid orange; */
   gap: 13px;
   input {
     flex: 1;
-    /* max-width: 320px; */
+    width: 100%;
     font-family: arial;
     font-weight: 400;
     border: none;
     outline: none;
     background-color: inherit;
+
   }
 
   svg {
@@ -66,6 +65,7 @@ const InputStyled = styled.div<InputStyledType>`
 const PrimaryVariant = css`
   background-color: ${theme.colors.white};
   padding: 19px 26px;
+  width: 100%;
 
   input {
     &::placeholder {
