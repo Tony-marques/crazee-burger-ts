@@ -13,6 +13,7 @@ type BasketProductProps = {
   price: string;
   quantity: number;
   id: number;
+  isAvailable: boolean;
   $isSelected: boolean;
   $isClickable: boolean;
 };
@@ -28,6 +29,7 @@ const BasketProduct = ({
   price,
   quantity,
   id,
+  isAvailable,
   $isSelected,
   $isClickable,
 }: BasketProductProps) => {
@@ -65,7 +67,7 @@ const BasketProduct = ({
       <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
       <div className="product-informations">
         <div className="title">{title}</div>
-        <div className="price">{price}</div>
+        <div className="price">{isAvailable ? price : "Non disponible"}</div>
       </div>
       <div className="quantity">
         <TransitionGroup>

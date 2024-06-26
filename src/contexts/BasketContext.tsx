@@ -74,10 +74,15 @@ export const BasketContextProvider = ({
         (product) => product.id === basketProduct.id
       )!;
       // if (productItem) {
-        if (isNaN(productItem.price)) {
-          return total;
-        }
-        return total + basketProduct.quantity * productItem.price;
+      if (isNaN(productItem.price)) {
+        return total;
+      }
+
+      if (!productItem.isAvailable) {
+        return total;
+      }
+
+      return total + basketProduct.quantity * productItem.price;
       // }
     }, 0);
     setTotal(totalPrice);

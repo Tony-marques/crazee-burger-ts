@@ -13,7 +13,7 @@ const MenuList = () => {
   return (
     <MenuListStyled>
       <TransitionGroup component={null}>
-        {products?.map(({ id, title, imageSource, price }) => (
+        {products?.map(({ id, title, imageSource, price, isAvailable }) => (
           <CSSTransition
             classNames={"menuitem-animated"}
             key={id}
@@ -25,6 +25,7 @@ const MenuList = () => {
               imageSource={imageSource}
               title={title}
               price={formatPrice(price)}
+              isAvailable={isAvailable}
               $selected={isAdmin && selectedProduct.id === id}
               $isAdmin={isAdmin}
             />

@@ -29,6 +29,7 @@ const BasketProducts = () => {
                 price={formatPrice(product.price)}
                 quantity={quantity}
                 id={product.id}
+                isAvailable={product.isAvailable}
                 $isSelected={isAdmin && id === selectedProduct.id}
                 $isClickable={isAdmin}
               />

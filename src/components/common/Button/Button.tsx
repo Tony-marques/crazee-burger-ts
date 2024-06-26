@@ -8,11 +8,13 @@ type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   $size: "auto" | "full";
   $variant: "primary" | "secondary";
+  $isDisabled?: boolean;
 };
 
 type ButtonStyledType = {
   $size: string;
   $variant: string;
+  $isDisabled?: boolean;
 };
 
 const Button = ({
@@ -22,6 +24,7 @@ const Button = ({
   onClick,
   $size,
   $variant,
+  $isDisabled,
 }: ButtonProps) => {
   return (
     <ButtonStyled
@@ -29,6 +32,8 @@ const Button = ({
       $size={$size}
       $variant={$variant}
       onClick={onClick}
+      $isDisabled={$isDisabled}
+      disabled={$isDisabled}
     >
       <span>{label}</span>
       {Icon}
@@ -62,6 +67,7 @@ const ButtonStyled = styled.button<ButtonStyledType>`
 
   ${({ $size }) => size[$size]}
   ${({ $variant }) => variant[$variant]}
+  ${({ $isDisabled }) => $isDisabled && isDisabled}
 `;
 
 const sizeAuto = css`
@@ -117,3 +123,9 @@ const variant: { [key: string]: ReturnType<typeof css> } = {
   primary: primaryVariant,
   secondary: secondaryVariant,
 };
+
+const isDisabled = css`
+  cursor: not-allowed;
+  z-index: 10;
+  opacity: 50%;
+`;

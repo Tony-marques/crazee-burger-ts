@@ -5,15 +5,17 @@ import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
+import { fadeInFromRight } from "../../../../theme/animations";
 import Button from "../../../common/Button/Button";
 import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
-import { fadeInFromRight } from "../../../../theme/animations";
+import NO_STOCK_IMAGE from "/assets/images/stock-epuise.png";
 
 type MenuItemProps = {
   id: number;
   imageSource: string;
   title: string;
   price: string;
+  isAvailable: boolean;
   $selected: boolean;
   $isAdmin: boolean;
 };
@@ -28,6 +30,7 @@ const MenuItem = ({
   imageSource,
   title,
   price,
+  isAvailable,
   $selected,
   $isAdmin,
 }: MenuItemProps) => {
@@ -84,6 +87,8 @@ const MenuItem = ({
     }
   };
 
+  console.log(isAvailable);
+
   return (
     <MenuItemStyled
       onClick={() => handleOnSelected(id)}
@@ -93,11 +98,16 @@ const MenuItem = ({
       {isAdmin && (
         // <TransitionGroup>
         //   <CSSTransition >
-        <button className="delete" onClick={(e) => handleOnDelete(e, id)}>
+        <button className={isAvailable ? "delete" : "delete button-not-available"} onClick={(e) => handleOnDelete(e, id)}>
           <TiDelete />
         </button>
         //</CSSTransition>
         //</TransitionGroup>
+      )}
+      {!isAvailable && (
+        <div className="not-available">
+          <img src={NO_STOCK_IMAGE} />
+        </div>
       )}
       <img
         src={imageSource ? imageSource : DEFAULT_IMAGE}
@@ -112,6 +122,7 @@ const MenuItem = ({
           $variant="primary"
           $size="full"
           onClick={(e) => handleOnAdd(e)}
+          $isDisabled={!isAvailable}
         />
       </div>
     </MenuItemStyled>
@@ -132,6 +143,26 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
   border-radius: ${theme.borderRadius.extraRound};
   position: relative;
   transition: background-color 0.2s, box-shadow 0.2s;
+
+  .not-available {
+    position: absolute;
+    /* border: 1px solid red; */
+    background-color: white;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    border-radius: ${theme.borderRadius.extraRound};
+
+
+    img{
+      width: 192px;
+    }
+  }
   img {
     max-width: 100%;
     height: 145px;
@@ -180,9 +211,14 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
     justify-content: center;
     align-items: center;
     border: none;
-    background-color: inherit;
+    background-color: transparent;
     color: ${theme.colors.primary};
     transition: color 0.2s;
+
+    &.button-not-available{
+      z-index: 10;
+    }
+    
     cursor: pointer;
     animation: ${fadeInFromRight} 500ms ease-out;
 
