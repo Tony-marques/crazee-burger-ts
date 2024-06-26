@@ -7,32 +7,34 @@ import { formatPrice } from "../../../../../utils/maths";
 import BasketProduct from "./BasketProduct";
 
 const BasketProducts = () => {
-  const { selectedProduct } = useProductContext();
+  const { selectedProduct, products } = useProductContext();
   const { basketProducts } = useBasketContext();
   const { isAdmin } = useAdminContext();
 
   return (
     <BasketProductsStyled>
       <TransitionGroup component={null}>
-        {basketProducts.map(({ imageSource, id, title, price, quantity }) => (
-          <CSSTransition
-            appear={true}
-            classNames={"basket-animated"}
-            key={id}
-            timeout={500}
-          >
-            <BasketProduct
-              // key={id}
-              imageUrl={imageSource}
-              title={title}
-              price={formatPrice(price)}
-              quantity={quantity}
-              id={id}
-              $isSelected={isAdmin && id === selectedProduct.id}
-              $isClickable={isAdmin}
-            />
-          </CSSTransition>
-        ))}
+        {basketProducts.map(({ id, quantity }) => {
+          const product = products.find((product) => product.id === id)!;
+          return (
+            <CSSTransition
+              appear={true}
+              classNames={"basket-animated"}
+              key={id}
+              timeout={500}
+            >
+              <BasketProduct
+                imageUrl={product.imageSource}
+                title={product.title}
+                price={formatPrice(product.price)}
+                quantity={quantity}
+                id={product.id}
+                $isSelected={isAdmin && id === selectedProduct.id}
+                $isClickable={isAdmin}
+              />
+            </CSSTransition>
+          );
+        })}
       </TransitionGroup>
     </BasketProductsStyled>
   );

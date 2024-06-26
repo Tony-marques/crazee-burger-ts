@@ -6,13 +6,14 @@ import {
   useState,
 } from "react";
 import { ProductType } from "../types/ProductType";
+import { useProductContext } from "./ProductContext";
 
 type BasketContextProviderProps = {
   children: ReactNode;
 };
 
 type BasketContextType = {
-  basketProducts: ProductType[];
+  basketProducts: { id: number; quantity: number }[];
   handleAddProductInBasket: (productToAdd: ProductType) => void;
   total: number;
   handleDeleteProductInBasket: (productIdToDelete: number) => void;
@@ -26,6 +27,7 @@ export const BasketContextProvider = ({
 }: BasketContextProviderProps) => {
   const [basketProducts, setBasketProducts] = useState<ProductType[]>([]);
   const [total, setTotal] = useState(0);
+  const { products } = useProductContext();
 
   const handleAddProductInBasket = (productToAdd: ProductType) => {
     const productIsAlreadyInBasket = basketProducts.find(
@@ -34,11 +36,16 @@ export const BasketContextProvider = ({
 
     const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
 
+    const product = {
+      id: productToAdd.id,
+    };
+
     if (!productIsAlreadyInBasket) {
       const updatedBasketProducts = [
-        { ...productToAdd, quantity: 1 },
+        { ...product, quantity: 1 },
         ...basketProductsCopy,
       ];
+
       setBasketProducts(updatedBasketProducts);
       return;
     }
@@ -86,12 +93,16 @@ export const BasketContextProvider = ({
 
   const totalMount = () => {
     const totalPrice = basketProducts.reduce((total, basketProduct) => {
-      if (isNaN(basketProduct.price)) {
-        return total;
-      }
-      return total + basketProduct.quantity * basketProduct.price;
+      const productItem = products.find(
+        (product) => product.id === basketProduct.id
+      )!;
+      // if (productItem) {
+        if (isNaN(productItem.price)) {
+          return total;
+        }
+        return total + basketProduct.quantity * productItem.price;
+      // }
     }, 0);
-
     setTotal(totalPrice);
   };
 
