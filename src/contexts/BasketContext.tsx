@@ -17,7 +17,6 @@ type BasketContextType = {
   handleAddProductInBasket: (productToAdd: ProductType) => void;
   total: number;
   handleDeleteProductInBasket: (productIdToDelete: number) => void;
-  handleEditProductInBasket: (productToEdit: ProductType) => void;
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -59,28 +58,6 @@ export const BasketContextProvider = ({
     setBasketProducts(basketProductsCopy);
   };
 
-  const handleEditProductInBasket = (productToEdit: ProductType) => {
-    const isProductIsAlreadyInBasket =
-      basketProducts.find((product) => product.id === productToEdit.id) !==
-      undefined;
-    if (!isProductIsAlreadyInBasket) return;
-
-    const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
-
-    const productIndex = basketProducts.findIndex(
-      (product) => product.id === productToEdit.id
-    );
-
-    basketProductsCopy[productIndex] = {
-      ...productToEdit,
-      quantity: basketProductsCopy[productIndex].quantity,
-      isAdvertise: basketProductsCopy[productIndex].isAdvertise,
-      isAvailable: basketProductsCopy[productIndex].isAvailable,
-    };
-
-    setBasketProducts(basketProductsCopy);
-  };
-
   const handleDeleteProductInBasket = (productIdToDelete: number) => {
     const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
 
@@ -108,14 +85,13 @@ export const BasketContextProvider = ({
 
   useEffect(() => {
     totalMount();
-  }, [basketProducts]);
+  }, [products, basketProducts]);
 
   const basketContextValue: BasketContextType = {
     basketProducts,
     handleAddProductInBasket,
     total,
     handleDeleteProductInBasket,
-    handleEditProductInBasket,
   };
 
   return (

@@ -1,17 +1,14 @@
 import styled from "styled-components";
-import { useBasketContext } from "../../../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
 import { theme } from "../../../../../../theme";
 import AdminForm from "./AdminForm";
-import { FiCheck } from "react-icons/fi";
-import Button from "../../../../../common/Button/Button";
+import { ProductType } from "../../../../../../types/ProductType";
 
 const EditProductForm = () => {
   const { inputTitleRef } = useProductContext();
 
   const { selectedProduct, handleEditProduct, handleEditFormProduct } =
     useProductContext();
-  const { handleEditProductInBasket } = useBasketContext();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -19,11 +16,36 @@ const EditProductForm = () => {
       [e.target.name]: e.target.value,
     };
 
-    handleEditFormProduct(product);
-    handleEditProduct(product);
+    const newProduct: ProductType = {
+      ...product,
+      isAvailable:
+        product.isAvailable === true
+          ? true
+          : product.isAvailable === false
+          ? false
+          : product.isAvailable === "true"
+          ? true
+          : product.isAvailable === "false"
+          ? false
+          : false,
+      isAdvertised:
+        product.isAdvertised === true
+          ? true
+          : product.isAdvertised === false
+          ? false
+          : product.isAdvertised === "true"
+          ? true
+          : product.isAdvertised === "false"
+          ? false
+          : false,
+      price: Number(product.price),
+    };
 
-    handleEditProductInBasket(product);
+    handleEditFormProduct(newProduct);
+    handleEditProduct(newProduct);
   };
+
+ 
 
   return (
     <EditProductFormStyled>
