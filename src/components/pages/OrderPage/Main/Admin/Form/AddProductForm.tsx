@@ -95,19 +95,20 @@ export default AddProductForm;
 const AddProductFormStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 65% 1fr;
   gap: 20px;
   justify-content: center;
   padding-top: 31px;
   padding-left: 71px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 70%;
+  height: 100%;
 
   form {
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.xs};
-    grid-area: 1/2/5/3;
+    grid-area: 1/2/2/3;
   }
 
   .image-preview {
@@ -115,7 +116,7 @@ const AddProductFormStyled = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-area: 1/1/4/2;
+    grid-area: 1/1/2/2;
 
     p {
       color: ${theme.colors.greySemiDark};

@@ -155,7 +155,7 @@ const InputsStyled = styled.div`
   grid-template-rows: repeat(3, 1fr);
 
   .title {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     grid-area: 1/1/2/4;
     /* grid-area: 1/1/1/4; */
   }

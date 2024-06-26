@@ -26,10 +26,10 @@ const EditPanel = () => {
       {/* {selectedProduct.title !== "" ? ( */}
       <EditProductForm />
       {/* ) : ( */}
-      <p className="click-to-edit">
+      {/* <p className="click-to-edit">
         <span>Cliquer sur un produit pour le modifier</span>
         <HiCursorClick />
-      </p>
+      </p> */}
       {/* )} */}
     </EditPanelStyled>
   );
@@ -39,7 +39,7 @@ export default EditPanel;
 
 const EditPanelStyled = styled.div`
   /* border: 1px solid red; */
-  height: 250px;
+  height: 251px;
   .click-to-edit {
     padding: 81px 71px;
     display: flex;

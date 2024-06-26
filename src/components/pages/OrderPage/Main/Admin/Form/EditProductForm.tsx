@@ -1,15 +1,17 @@
 import styled from "styled-components";
+import { useBasketContext } from "../../../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
 import { theme } from "../../../../../../theme";
 import AdminForm from "./AdminForm";
-import { useBasketContext } from "../../../../../../contexts/BasketContext";
+import { FiCheck } from "react-icons/fi";
+import Button from "../../../../../common/Button/Button";
 
 const EditProductForm = () => {
   const { inputTitleRef } = useProductContext();
 
   const { selectedProduct, handleEditProduct, handleEditFormProduct } =
     useProductContext();
-    const {handleEditProductInBasket} = useBasketContext()
+  const { handleEditProductInBasket } = useBasketContext();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -20,7 +22,7 @@ const EditProductForm = () => {
     handleEditFormProduct(product);
     handleEditProduct(product);
 
-    handleEditProductInBasket(product)
+    handleEditProductInBasket(product);
   };
 
   return (
@@ -36,6 +38,15 @@ const EditProductForm = () => {
             <span>en temps réel</span>
           </div>
         </div>
+        {/* <div className="button-container">
+          <Button
+            label="ajouter un nouveau produit au menu"
+            $size="auto"
+            $variant="secondary"
+            className="button-product-form"
+          />
+
+        </div> */}
       </AdminForm>
     </EditProductFormStyled>
   );
@@ -44,24 +55,44 @@ const EditProductForm = () => {
 export default EditProductForm;
 
 const EditProductFormStyled = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr 3fr;
   gap: ${theme.spacing.md};
   justify-content: center;
-  padding: 31px 71px;
+  padding: 31px 71px; */
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 65% 1fr;
+  gap: 20px;
+  justify-content: center;
+  padding-top: 31px;
+  padding-left: 71px;
+  /* border: 1px solid red; */
+  width: 70%;
+  height: 100%;
 
   form {
+    /* display: flex;
+    flex-direction: column;
+    gap: ${theme.spacing.xs}; */
+
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.xs};
+    grid-area: 1/2/2/3;
   }
 
   .image-preview {
-    width: 215px;
+    /* width: 215px;
     height: 120px;
     display: flex;
     justify-content: center;
+    align-items: center; */
+
+    display: flex;
+    justify-content: center;
     align-items: center;
+    grid-area: 1/1/2/2;
 
     p {
       color: ${theme.colors.greySemiDark};
