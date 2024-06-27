@@ -17,6 +17,7 @@ type BasketContextType = {
   handleAddProductInBasket: (productToAdd: ProductType) => void;
   total: number;
   handleDeleteProductInBasket: (productIdToDelete: number) => void;
+  // renderedProducts: (isAdmin: boolean) => (JSX.Element | null)[];
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -92,11 +93,50 @@ export const BasketContextProvider = ({
     totalMount();
   }, [products, basketProducts]);
 
+  // const renderedProducts = (isAdmin: boolean) => {
+  //   return basketProducts
+  //     .map(({ id, quantity }) => {
+  //       const product = products.find((product) => product.id === id);
+
+  //       if (!product) {
+  //         return null;
+  //       }
+
+  //       return (
+  //         <CSSTransition
+  //           appear={true}
+  //           classNames={"basket-animated"}
+  //           key={id}
+  //           timeout={500}
+  //         >
+  //           <div className="card-container">
+  //             {product.isAdvertised && <Sticker className="badge-new" />}
+  //             <BasketProduct
+  //               imageUrl={product.imageSource}
+  //               title={product.title}
+  //               price={
+  //                 product.isAvailable
+  //                   ? formatPrice(product.price)
+  //                   : "Non disponible"
+  //               }
+  //               quantity={quantity}
+  //               id={product.id}
+  //               $isSelected={isAdmin && id === selectedProduct.id}
+  //               $isClickable={isAdmin}
+  //             />
+  //           </div>
+  //         </CSSTransition>
+  //       );
+  //     })
+  //     .filter(Boolean);
+  // };
+
   const basketContextValue: BasketContextType = {
     basketProducts,
     handleAddProductInBasket,
     total,
     handleDeleteProductInBasket,
+    // renderedProducts,
   };
 
   return (

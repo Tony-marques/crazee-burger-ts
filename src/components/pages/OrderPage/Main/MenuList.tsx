@@ -2,9 +2,10 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import styled from "styled-components";
 import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
-import { formatPrice } from "../../../../utils/maths";
-import MenuItem from "./MenuItem";
 import { menuAnimation } from "../../../../theme/animations";
+import { formatPrice } from "../../../../utils/maths";
+import Ribbon from "../../../common/Ribbon/Ribbon";
+import MenuItem from "./MenuItem";
 
 const MenuList = () => {
   const { isAdmin } = useAdminContext();
@@ -13,24 +14,29 @@ const MenuList = () => {
   return (
     <MenuListStyled>
       <TransitionGroup component={null}>
-        {products?.map(({ id, title, imageSource, price, isAvailable }) => (
-          <CSSTransition
-            classNames={"menuitem-animated"}
-            key={id}
-            timeout={300}
-          >
-            <MenuItem
-              id={id}
+        {products?.map(
+          ({ id, title, imageSource, price, isAvailable, isAdvertised }) => (
+            <CSSTransition
+              classNames={"menuitem-animated"}
               key={id}
-              imageSource={imageSource}
-              title={title}
-              price={formatPrice(price)}
-              isAvailable={isAvailable}
-              $selected={isAdmin && selectedProduct.id === id}
-              $isAdmin={isAdmin}
-            />
-          </CSSTransition>
-        ))}
+              timeout={300}
+            >
+              <div className="card-container">
+                {isAdvertised && <Ribbon label="nouveau"/>}
+                <MenuItem
+                  id={id}
+                  key={id}
+                  imageSource={imageSource}
+                  title={title}
+                  price={formatPrice(price)}
+                  isAvailable={isAvailable}
+                  $selected={isAdmin && selectedProduct.id === id}
+                  $isAdmin={isAdmin}
+                />
+              </div>
+            </CSSTransition>
+          )
+        )}
       </TransitionGroup>
     </MenuListStyled>
   );
@@ -51,4 +57,8 @@ const MenuListStyled = styled.div`
   padding: 50px 50px 300px;
 
   ${menuAnimation}
+
+  .card-container {
+    position: relative;
+  }
 `;

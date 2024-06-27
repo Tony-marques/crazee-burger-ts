@@ -100,7 +100,6 @@ const AddProductFormStyled = styled.div`
   justify-content: center;
   padding-top: 31px;
   padding-left: 71px;
-  /* border: 1px solid red; */
   width: 70%;
   height: 100%;
 

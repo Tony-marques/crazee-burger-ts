@@ -5,7 +5,7 @@ import { useAdminContext } from "../../../../contexts/AdminContext";
 import { useBasketContext } from "../../../../contexts/BasketContext";
 import { useProductContext } from "../../../../contexts/ProductContext";
 import { theme } from "../../../../theme";
-import { fadeInFromRight } from "../../../../theme/animations";
+import { fadeInFromRight, fadeInFromTop } from "../../../../theme/animations";
 import Button from "../../../common/Button/Button";
 import DEFAULT_IMAGE from "/assets/images/coming-soon.png";
 import NO_STOCK_IMAGE from "/assets/images/stock-epuise.png";
@@ -87,8 +87,6 @@ const MenuItem = ({
     }
   };
 
-  console.log(isAvailable);
-
   return (
     <MenuItemStyled
       onClick={() => handleOnSelected(id)}
@@ -96,14 +94,14 @@ const MenuItem = ({
       $isAdmin={$isAdmin}
     >
       {isAdmin && (
-        // <TransitionGroup>
-        //   <CSSTransition >
-        <button className={isAvailable ? "delete" : "delete button-not-available"} onClick={(e) => handleOnDelete(e, id)}>
+        <button
+          className={isAvailable ? "delete" : "delete button-not-available"}
+          onClick={(e) => handleOnDelete(e, id)}
+        >
           <TiDelete />
         </button>
-        //</CSSTransition>
-        //</TransitionGroup>
       )}
+
       {!isAvailable && (
         <div className="not-available">
           <img src={NO_STOCK_IMAGE} />
@@ -158,9 +156,9 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
     opacity: 0.7;
     border-radius: ${theme.borderRadius.extraRound};
 
-
-    img{
+    img {
       width: 192px;
+      animation: ${fadeInFromTop} 0.5s;
     }
   }
   img {
@@ -215,10 +213,10 @@ const MenuItemStyled = styled.div<MenuItemStyledType>`
     color: ${theme.colors.primary};
     transition: color 0.2s;
 
-    &.button-not-available{
+    &.button-not-available {
       z-index: 10;
     }
-    
+
     cursor: pointer;
     animation: ${fadeInFromRight} 500ms ease-out;
 

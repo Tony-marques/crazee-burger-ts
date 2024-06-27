@@ -1,4 +1,3 @@
-import { HiCursorClick } from "react-icons/hi";
 import styled from "styled-components";
 import { theme } from "../../../../../theme";
 import EditProductForm from "./Form/EditProductForm";

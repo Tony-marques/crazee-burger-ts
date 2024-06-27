@@ -1,41 +1,53 @@
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { TransitionGroup } from "react-transition-group";
 import styled from "styled-components";
-import { useAdminContext } from "../../../../../contexts/AdminContext";
-import { useBasketContext } from "../../../../../contexts/BasketContext";
-import { useProductContext } from "../../../../../contexts/ProductContext";
-import { formatPrice } from "../../../../../utils/maths";
-import BasketProduct from "./BasketProduct";
+import { RenderedProducts } from "./RenderedProducts";
 
 const BasketProducts = () => {
-  const { selectedProduct, products } = useProductContext();
-  const { basketProducts } = useBasketContext();
-  const { isAdmin } = useAdminContext();
+  // const { selectedProduct, products } = useProductContext();
+  // const { basketProducts } = useBasketContext();
+  // const { isAdmin } = useAdminContext();
+
+  // const renderedProducts = basketProducts
+  //   .map(({ id, quantity }) => {
+  //     const product = products.find((product) => product.id === id);
+
+  //     if (!product) {
+  //       return null;
+  //     }
+
+  //     return (
+  //       <CSSTransition
+  //         appear={true}
+  //         classNames={"basket-animated"}
+  //         key={id}
+  //         timeout={500}
+  //       >
+  //         <div className="card-container">
+  //           {product.isAdvertised && <Sticker className="badge-new"/>}
+  //           <BasketProduct
+  //             imageUrl={product.imageSource}
+  //             title={product.title}
+  //             price={
+  //               product.isAvailable
+  //                 ? formatPrice(product.price)
+  //                 : "Non disponible"
+  //             }
+  //             quantity={quantity}
+  //             id={product.id}
+  //             $isSelected={isAdmin && id === selectedProduct.id}
+  //             $isClickable={isAdmin}
+  //           />
+  //         </div>
+  //       </CSSTransition>
+  //     );
+  //   })
+  //   .filter(Boolean);
 
   return (
     <BasketProductsStyled>
       <TransitionGroup component={null}>
-        {basketProducts.map(({ id, quantity }) => {
-          const product = products.find((product) => product.id === id)!;
-          return (
-            <CSSTransition
-              appear={true}
-              classNames={"basket-animated"}
-              key={id}
-              timeout={500}
-            >
-              <BasketProduct
-                imageUrl={product.imageSource}
-                title={product.title}
-                price={formatPrice(product.price)}
-                quantity={quantity}
-                id={product.id}
-                isAvailable={product.isAvailable}
-                $isSelected={isAdmin && id === selectedProduct.id}
-                $isClickable={isAdmin}
-              />
-            </CSSTransition>
-          );
-        })}
+        {/* {renderedProducts(isAdmin)} */}
+        {RenderedProducts()}
       </TransitionGroup>
     </BasketProductsStyled>
   );
@@ -50,6 +62,17 @@ const BasketProductsStyled = styled.div`
   gap: 20px;
   overflow-y: scroll;
   height: 100%;
+
+  .badge-new {
+    position: absolute;
+    z-index: 1;
+    bottom: 15%;
+    left: 21%;
+  }
+
+  .card-container {
+    position: relative;
+  }
 
   .basket-animated-appear {
     transform: translateX(50%);

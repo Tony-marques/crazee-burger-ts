@@ -46,6 +46,20 @@ export const fadeInFromRight = keyframes`
   }
 `;
 
+export const fadeInFromTop = keyframes`
+  from {
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transform: translatey(-40%);
+  }
+
+  to{
+    opacity: 1;
+    transform: translatey(0);
+  }
+`;
+
 export const menuAnimation = css`
   /* MOUNTING */
   .menuitem-animated-enter {
