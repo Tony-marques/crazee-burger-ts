@@ -1,11 +1,16 @@
+import { useState } from "react";
+import { IoCloudDoneOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
+import { useSuccessMessage } from "../../../../../../hooks/useSuccessMessage";
 import { theme } from "../../../../../../theme";
-import AdminForm from "./AdminForm";
 import { ProductType } from "../../../../../../types/ProductType";
+import AdminForm from "./AdminForm";
 
 const EditProductForm = () => {
+  const [inputFocus, setInputFocus] = useState("");
   const { inputTitleRef } = useProductContext();
+  const { displaySuccessMessage, isMessageSuccess } = useSuccessMessage();
 
   const { selectedProduct, handleEditProduct, handleEditFormProduct } =
     useProductContext();
@@ -45,7 +50,18 @@ const EditProductForm = () => {
     handleEditProduct(newProduct);
   };
 
- 
+  const handleOnFocus = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setInputFocus(e.target.value);
+  };
+  const handleOnBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    if (inputFocus !== e.target.value) {
+      displaySuccessMessage();
+    }
+  };
 
   return (
     <EditProductFormStyled>
@@ -53,22 +69,23 @@ const EditProductForm = () => {
         onChange={handleOnChange}
         product={selectedProduct}
         ref={inputTitleRef}
+        onBlur={handleOnBlur}
+        onFocus={handleOnFocus}
       >
         <div className="button-container">
-          <div>
-            Cliquer sur un produit du menu pour le modifier{" "}
-            <span>en temps réel</span>
-          </div>
+          {!isMessageSuccess && (
+            <div>
+              Cliquer sur un produit du menu pour le modifier{" "}
+              <span className="reel-time">en temps réel</span>
+            </div>
+          )}
+          {isMessageSuccess && (
+            <div className="success-message">
+              <IoCloudDoneOutline />
+              <span>Modifications enregistrées !</span>
+            </div>
+          )}
         </div>
-        {/* <div className="button-container">
-          <Button
-            label="ajouter un nouveau produit au menu"
-            $size="auto"
-            $variant="secondary"
-            className="button-product-form"
-          />
-
-        </div> */}
       </AdminForm>
     </EditProductFormStyled>
   );
@@ -77,11 +94,6 @@ const EditProductForm = () => {
 export default EditProductForm;
 
 const EditProductFormStyled = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: ${theme.spacing.md};
-  justify-content: center;
-  padding: 31px 71px; */
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 65% 1fr;
@@ -89,15 +101,10 @@ const EditProductFormStyled = styled.div`
   justify-content: center;
   padding-top: 31px;
   padding-left: 71px;
-  /* border: 1px solid red; */
   width: 70%;
   height: 100%;
 
   form {
-    /* display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.xs}; */
-
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.xs};
@@ -105,12 +112,6 @@ const EditProductFormStyled = styled.div`
   }
 
   .image-preview {
-    /* width: 215px;
-    height: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -149,8 +150,15 @@ const EditProductFormStyled = styled.div`
     font-weight: 400;
     font-size: ${theme.fonts.size.SM};
 
-    span {
+    .reel-time {
       text-decoration: underline;
+    }
+
+    .success-message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: ${theme.colors.blue};
     }
   }
 `;

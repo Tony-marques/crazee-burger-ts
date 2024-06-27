@@ -7,9 +7,11 @@ type InputProps = {
   placeholder: string;
   required?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
   value: string;
   name: string;
-  className: string;
+  className?: string;
   Icon?: JSX.Element;
   $variant: "primary" | "secondary";
 };
@@ -48,7 +50,6 @@ const InputStyled = styled.div<InputStyledType>`
     border: none;
     outline: none;
     background-color: inherit;
-
   }
 
   svg {

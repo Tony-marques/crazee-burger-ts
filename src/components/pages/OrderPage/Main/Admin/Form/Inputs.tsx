@@ -14,12 +14,17 @@ type InputsConfigsType = {
   id: number;
   type: string;
   placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   value: string;
   name: string;
   className?: string;
   Icon: JSX.Element;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
   $variant: "secondary" | "primary";
+};
+
+type ExtendsInputsConfigsType = InputsConfigsType & {
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
 };
 
 type InputsSelectConfigsType = {
@@ -28,28 +33,36 @@ type InputsSelectConfigsType = {
     label: string;
     value: string;
   }[];
-  value: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value: string;
+
   name: string;
   Icon: JSX.Element;
   className: string;
 };
 
+type ExtendsInputsSelectConfigsType = InputsSelectConfigsType & {
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+};
+
 type InputsProps = {
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: React.ChangeEventHandler;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
   product: ProductType;
 };
 
 type InputRefType = React.LegacyRef<HTMLInputElement> | undefined;
 
 const Inputs = React.forwardRef(
-  ({ onChange, product }: InputsProps, ref: InputRefType) => {
-    const inputsConfigs: InputsConfigsType[] = [
+  ({ onChange, onBlur, onFocus, product }: InputsProps, ref: InputRefType) => {
+    const inputsConfigs: ExtendsInputsConfigsType[] = [
       {
         id: 0,
         type: "text",
         placeholder: "Nom du produit (ex: Super Burger)",
         onChange: onChange,
+        onBlur: onBlur,
+        onFocus: onFocus,
         value: product.title,
         name: "title",
         Icon: <FaHamburger />,
@@ -62,6 +75,8 @@ const Inputs = React.forwardRef(
         placeholder:
           "Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)",
         onChange: onChange,
+        onBlur: onBlur,
+        onFocus: onFocus,
         value: product.imageSource,
         name: "imageSource",
         Icon: <BsFillCameraFill />,
@@ -73,6 +88,8 @@ const Inputs = React.forwardRef(
         type: "text",
         placeholder: "Prix",
         onChange: onChange,
+        onBlur: onBlur,
+        onFocus: onFocus,
         value: product.price ? product.price.toString() : "",
         name: "price",
         Icon: <MdOutlineEuro />,
@@ -81,14 +98,14 @@ const Inputs = React.forwardRef(
       },
     ];
 
-    const inputsSelectConfigs: InputsSelectConfigsType[] = [
+    const inputsSelectConfigs: ExtendsInputsSelectConfigsType[] = [
       {
         id: 0,
         options: [
           { label: "En rupture", value: "false" },
           { label: "En stock", value: "true" },
         ],
-        value: product.isAvailable,
+        value: product.isAvailable.toString(),
         onChange: onChange,
         name: "isAvailable",
         Icon: <FiPackage />,
@@ -102,7 +119,7 @@ const Inputs = React.forwardRef(
           { label: "Sans pub", value: "false" },
         ],
         onChange: onChange,
-        value: product.isAdvertised,
+        value: product.isAdvertised.toString(),
         name: "isAdvertised",
         Icon: <GoMegaphone />,
         className: "pub",
@@ -120,6 +137,8 @@ const Inputs = React.forwardRef(
             value,
             name,
             Icon,
+            onBlur,
+            onFocus,
             $variant,
             className,
           }) => (
@@ -128,6 +147,8 @@ const Inputs = React.forwardRef(
               type={type}
               placeholder={placeholder}
               onChange={onChange}
+              onBlur={onBlur}
+              onFocus={onFocus}
               value={value}
               name={name}
               Icon={Icon}
@@ -155,9 +176,7 @@ const InputsStyled = styled.div`
   grid-template-rows: repeat(3, 1fr);
 
   .title {
-    /* border: 1px solid red; */
     grid-area: 1/1/2/4;
-    /* grid-area: 1/1/1/4; */
   }
 
   .image-source {

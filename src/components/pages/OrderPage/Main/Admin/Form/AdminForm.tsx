@@ -6,6 +6,8 @@ type AdminFormProps = {
   product: ProductType;
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
   children?: ReactNode;
 };
 
@@ -13,7 +15,7 @@ type InputRefType = React.LegacyRef<HTMLInputElement> | undefined;
 
 const AdminForm = React.forwardRef(
   (
-    { product, onSubmit, onChange, children }: AdminFormProps,
+    { product, onSubmit, onChange, onBlur, onFocus, children }: AdminFormProps,
     ref: InputRefType
   ) => {
     return (
@@ -26,7 +28,13 @@ const AdminForm = React.forwardRef(
           )}
         </div>
         <form action="" onSubmit={onSubmit}>
-          <Inputs onChange={onChange} product={product} ref={ref} />
+          <Inputs
+            onChange={onChange}
+            product={product}
+            ref={ref}
+            onBlur={onBlur}
+            onFocus={onFocus}
+          />
 
           {children}
         </form>

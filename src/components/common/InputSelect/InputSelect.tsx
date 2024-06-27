@@ -7,7 +7,7 @@ type InputSelectProps = {
     value: string;
   }[];
   value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onChange: React.ChangeEventHandler<HTMLSelectElement>;
   name: string;
   Icon: JSX.Element;
   className: string;
