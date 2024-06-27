@@ -62,7 +62,10 @@ const BasketProduct = ({
       $isClickable={$isClickable}
       onClick={handleOnSelected}
     >
-      <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
+      <div className="">
+        <img src={imageUrl ? imageUrl : DEFAULT_IMAGE} alt="" />
+        {/* <Sticker /> */}
+      </div>
       <div className="product-informations">
         <div className="title">{title}</div>
         <div className="price">{price}</div>

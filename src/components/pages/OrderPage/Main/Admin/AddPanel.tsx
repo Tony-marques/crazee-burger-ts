@@ -11,4 +11,6 @@ const AddPanel = () => {
 
 export default AddPanel;
 
-const AddPanelStyled = styled.div``;
+const AddPanelStyled = styled.div`
+  height: 251px;
+`;

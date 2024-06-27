@@ -1,15 +1,19 @@
+import { useState } from "react";
+import { IoCloudDoneOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { useProductContext } from "../../../../../../contexts/ProductContext";
+import { useSuccessMessage } from "../../../../../../hooks/useSuccessMessage";
 import { theme } from "../../../../../../theme";
+import { ProductType } from "../../../../../../types/ProductType";
 import AdminForm from "./AdminForm";
-import { useBasketContext } from "../../../../../../contexts/BasketContext";
 
 const EditProductForm = () => {
+  const [inputFocus, setInputFocus] = useState("");
   const { inputTitleRef } = useProductContext();
+  const { displaySuccessMessage, isMessageSuccess } = useSuccessMessage();
 
   const { selectedProduct, handleEditProduct, handleEditFormProduct } =
     useProductContext();
-    const {handleEditProductInBasket} = useBasketContext()
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const product = {
@@ -17,10 +21,46 @@ const EditProductForm = () => {
       [e.target.name]: e.target.value,
     };
 
-    handleEditFormProduct(product);
-    handleEditProduct(product);
+    const newProduct: ProductType = {
+      ...product,
+      isAvailable:
+        product.isAvailable === true
+          ? true
+          : product.isAvailable === false
+          ? false
+          : product.isAvailable === "true"
+          ? true
+          : product.isAvailable === "false"
+          ? false
+          : false,
+      isAdvertised:
+        product.isAdvertised === true
+          ? true
+          : product.isAdvertised === false
+          ? false
+          : product.isAdvertised === "true"
+          ? true
+          : product.isAdvertised === "false"
+          ? false
+          : false,
+      price: Number(product.price),
+    };
 
-    handleEditProductInBasket(product)
+    handleEditFormProduct(newProduct);
+    handleEditProduct(newProduct);
+  };
+
+  const handleOnFocus = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setInputFocus(e.target.value);
+  };
+  const handleOnBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    if (inputFocus !== e.target.value) {
+      displaySuccessMessage();
+    }
   };
 
   return (
@@ -29,12 +69,22 @@ const EditProductForm = () => {
         onChange={handleOnChange}
         product={selectedProduct}
         ref={inputTitleRef}
+        onBlur={handleOnBlur}
+        onFocus={handleOnFocus}
       >
         <div className="button-container">
-          <div>
-            Cliquer sur un produit du menu pour le modifier{" "}
-            <span>en temps réel</span>
-          </div>
+          {!isMessageSuccess && (
+            <div>
+              Cliquer sur un produit du menu pour le modifier{" "}
+              <span className="reel-time">en temps réel</span>
+            </div>
+          )}
+          {isMessageSuccess && (
+            <div className="success-message">
+              <IoCloudDoneOutline />
+              <span>Modifications enregistrées !</span>
+            </div>
+          )}
         </div>
       </AdminForm>
     </EditProductFormStyled>
@@ -46,22 +96,26 @@ export default EditProductForm;
 const EditProductFormStyled = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: ${theme.spacing.md};
+  grid-template-rows: 65% 1fr;
+  gap: 20px;
   justify-content: center;
-  padding: 31px 71px;
+  padding-top: 31px;
+  padding-left: 71px;
+  width: 70%;
+  height: 100%;
 
   form {
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.xs};
+    grid-area: 1/2/2/3;
   }
 
   .image-preview {
-    width: 215px;
-    height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
+    grid-area: 1/1/2/2;
 
     p {
       color: ${theme.colors.greySemiDark};
@@ -96,8 +150,15 @@ const EditProductFormStyled = styled.div`
     font-weight: 400;
     font-size: ${theme.fonts.size.SM};
 
-    span {
+    .reel-time {
       text-decoration: underline;
+    }
+
+    .success-message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: ${theme.colors.blue};
     }
   }
 `;

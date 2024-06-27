@@ -1,27 +1,13 @@
 import React, { ReactNode } from "react";
-import { BsFillCameraFill } from "react-icons/bs";
-import { FaHamburger } from "react-icons/fa";
-import { MdOutlineEuro } from "react-icons/md";
-import { ProductFormType } from "../../../../../../contexts/ProductContext";
 import { ProductType } from "../../../../../../types/ProductType";
-import Input from "../../../../../common/Input/Input";
-
-type InputsConfigsType = {
-  id: number;
-  type: string;
-  placeholder: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  value: string;
-  name: string;
-  className: string;
-  Icon: JSX.Element;
-  $variant: "secondary" | "primary";
-};
+import Inputs from "./Inputs";
 
 type AdminFormProps = {
-  product: ProductFormType | ProductType;
+  product: ProductType;
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
   children?: ReactNode;
 };
 
@@ -29,46 +15,9 @@ type InputRefType = React.LegacyRef<HTMLInputElement> | undefined;
 
 const AdminForm = React.forwardRef(
   (
-    { product, onSubmit, onChange, children }: AdminFormProps,
+    { product, onSubmit, onChange, onBlur, onFocus, children }: AdminFormProps,
     ref: InputRefType
   ) => {
-    const inputsConfigs: InputsConfigsType[] = [
-      {
-        id: 0,
-        type: "text",
-        placeholder: "Nom du produit (ex: Super Burger)",
-        onChange: onChange,
-        value: product.title,
-        name: "title",
-        className: "input-product-form",
-        Icon: <FaHamburger />,
-        $variant: "secondary",
-      },
-      {
-        id: 1,
-        type: "text",
-        placeholder:
-          "Lien URL d'une image (ex: https://la-photo-de-mon-produit.png)",
-        onChange: onChange,
-        value: product.imageSource,
-        name: "imageSource",
-        className: "input-product-form",
-        Icon: <BsFillCameraFill />,
-        $variant: "secondary",
-      },
-      {
-        id: 2,
-        type: "text",
-        placeholder: "Prix",
-        onChange: onChange,
-        value: product.price,
-        name: "price",
-        className: "input-product-form",
-        Icon: <MdOutlineEuro />,
-        $variant: "secondary",
-      },
-    ];
-
     return (
       <>
         <div className="image-preview">
@@ -79,32 +28,14 @@ const AdminForm = React.forwardRef(
           )}
         </div>
         <form action="" onSubmit={onSubmit}>
-          {inputsConfigs?.map(
-            ({
-              id,
-              type,
-              placeholder,
-              onChange,
-              value,
-              name,
-              className,
-              Icon,
-              $variant,
-            }) => (
-              <Input
-                key={id}
-                type={type}
-                placeholder={placeholder}
-                onChange={onChange}
-                value={value}
-                name={name}
-                className={className}
-                Icon={Icon}
-                $variant={$variant}
-                ref={ref && name === "title" ? ref : null}
-              />
-            )
-          )}
+          <Inputs
+            onChange={onChange}
+            product={product}
+            ref={ref}
+            onBlur={onBlur}
+            onFocus={onFocus}
+          />
+
           {children}
         </form>
       </>

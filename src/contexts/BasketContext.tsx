@@ -6,17 +6,18 @@ import {
   useState,
 } from "react";
 import { ProductType } from "../types/ProductType";
+import { useProductContext } from "./ProductContext";
 
 type BasketContextProviderProps = {
   children: ReactNode;
 };
 
 type BasketContextType = {
-  basketProducts: ProductType[];
+  basketProducts: { id: number; quantity: number }[];
   handleAddProductInBasket: (productToAdd: ProductType) => void;
   total: number;
   handleDeleteProductInBasket: (productIdToDelete: number) => void;
-  handleEditProductInBasket: (productToEdit: ProductType) => void;
+  // renderedProducts: (isAdmin: boolean) => (JSX.Element | null)[];
 };
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -26,6 +27,7 @@ export const BasketContextProvider = ({
 }: BasketContextProviderProps) => {
   const [basketProducts, setBasketProducts] = useState<ProductType[]>([]);
   const [total, setTotal] = useState(0);
+  const { products } = useProductContext();
 
   const handleAddProductInBasket = (productToAdd: ProductType) => {
     const productIsAlreadyInBasket = basketProducts.find(
@@ -34,11 +36,16 @@ export const BasketContextProvider = ({
 
     const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
 
+    const product = {
+      id: productToAdd.id,
+    };
+
     if (!productIsAlreadyInBasket) {
       const updatedBasketProducts = [
-        { ...productToAdd, quantity: 1 },
+        { ...product, quantity: 1 },
         ...basketProductsCopy,
       ];
+
       setBasketProducts(updatedBasketProducts);
       return;
     }
@@ -48,28 +55,6 @@ export const BasketContextProvider = ({
     );
 
     basketProductsCopy[basketProductIndex].quantity += 1;
-
-    setBasketProducts(basketProductsCopy);
-  };
-
-  const handleEditProductInBasket = (productToEdit: ProductType) => {
-    const isProductIsAlreadyInBasket =
-      basketProducts.find((product) => product.id === productToEdit.id) !==
-      undefined;
-    if (!isProductIsAlreadyInBasket) return;
-
-    const basketProductsCopy = JSON.parse(JSON.stringify(basketProducts));
-
-    const productIndex = basketProducts.findIndex(
-      (product) => product.id === productToEdit.id
-    );
-
-    basketProductsCopy[productIndex] = {
-      ...productToEdit,
-      quantity: basketProductsCopy[productIndex].quantity,
-      isAdvertise: basketProductsCopy[productIndex].isAdvertise,
-      isAvailable: basketProductsCopy[productIndex].isAvailable,
-    };
 
     setBasketProducts(basketProductsCopy);
   };
@@ -86,25 +71,72 @@ export const BasketContextProvider = ({
 
   const totalMount = () => {
     const totalPrice = basketProducts.reduce((total, basketProduct) => {
-      if (isNaN(basketProduct.price)) {
+      const productItem = products.find(
+        (product) => product.id === basketProduct.id
+      )!;
+      // if (productItem) {
+      if (isNaN(productItem.price)) {
         return total;
       }
-      return total + basketProduct.quantity * basketProduct.price;
-    }, 0);
 
+      if (!productItem.isAvailable) {
+        return total;
+      }
+
+      return total + basketProduct.quantity * productItem.price;
+      // }
+    }, 0);
     setTotal(totalPrice);
   };
 
   useEffect(() => {
     totalMount();
-  }, [basketProducts]);
+  }, [products, basketProducts]);
+
+  // const renderedProducts = (isAdmin: boolean) => {
+  //   return basketProducts
+  //     .map(({ id, quantity }) => {
+  //       const product = products.find((product) => product.id === id);
+
+  //       if (!product) {
+  //         return null;
+  //       }
+
+  //       return (
+  //         <CSSTransition
+  //           appear={true}
+  //           classNames={"basket-animated"}
+  //           key={id}
+  //           timeout={500}
+  //         >
+  //           <div className="card-container">
+  //             {product.isAdvertised && <Sticker className="badge-new" />}
+  //             <BasketProduct
+  //               imageUrl={product.imageSource}
+  //               title={product.title}
+  //               price={
+  //                 product.isAvailable
+  //                   ? formatPrice(product.price)
+  //                   : "Non disponible"
+  //               }
+  //               quantity={quantity}
+  //               id={product.id}
+  //               $isSelected={isAdmin && id === selectedProduct.id}
+  //               $isClickable={isAdmin}
+  //             />
+  //           </div>
+  //         </CSSTransition>
+  //       );
+  //     })
+  //     .filter(Boolean);
+  // };
 
   const basketContextValue: BasketContextType = {
     basketProducts,
     handleAddProductInBasket,
     total,
     handleDeleteProductInBasket,
-    handleEditProductInBasket,
+    // renderedProducts,
   };
 
   return (

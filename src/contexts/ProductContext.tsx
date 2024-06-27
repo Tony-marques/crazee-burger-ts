@@ -19,7 +19,7 @@ export const EMPTY_PRODUCT: ProductType = {
   title: "",
   price: 0,
   quantity: 0,
-  isAvailable: false,
+  isAvailable: true,
   isAdvertised: false,
 };
 
@@ -34,8 +34,8 @@ type ProductContextType = {
     name: string | undefined
   ) => void;
   handleResetProducts: () => void;
-  productForm: ProductFormType;
-  updateProductForm: (productToUpdate: ProductFormType) => void;
+  productForm: ProductType;
+  updateProductForm: (productToUpdate: ProductType) => void;
   handleSelectedProduct: (productId: number | undefined) => void;
   selectedProduct: ProductType;
   handleEditFormProduct: (productToEdit: ProductType) => void;
@@ -71,11 +71,7 @@ export const ProductContextProvider = ({
 
   const [selectedProduct, setSelectedProduct] =
     useState<ProductType>(EMPTY_PRODUCT);
-  const [productForm, setProductForm] = useState({
-    title: "",
-    imageSource: "",
-    price: "",
-  });
+  const [productForm, setProductForm] = useState<ProductType>(EMPTY_PRODUCT);
   const inputTitleRef = useRef<HTMLInputElement>(null);
 
   const handleSelectedProduct = (ProductId: number | undefined) => {
@@ -91,7 +87,7 @@ export const ProductContextProvider = ({
   //   setUsername(newName);
   // };
 
-  const updateProductForm = (productToUpdate: ProductFormType) => {
+  const updateProductForm = (productToUpdate: ProductType) => {
     setProductForm(productToUpdate);
   };
 

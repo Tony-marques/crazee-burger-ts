@@ -7,6 +7,8 @@ type InputProps = {
   placeholder: string;
   required?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>;
   value: string;
   name: string;
   className?: string;
@@ -20,7 +22,7 @@ type InputStyledType = {
 
 const Input = React.forwardRef(
   (
-    { Icon, className, $variant, ...restProps }: InputProps,
+    { Icon, $variant, className, ...restProps }: InputProps,
     ref: React.LegacyRef<HTMLInputElement>
   ) => {
     return (
@@ -35,18 +37,14 @@ const Input = React.forwardRef(
 export default Input;
 
 const InputStyled = styled.div<InputStyledType>`
-  padding: 19px 26px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
   border-radius: ${theme.borderRadius.round};
   background-color: ${theme.colors.white};
-  /* border: 2px solid orange; */
   gap: 13px;
   input {
     flex: 1;
-    /* max-width: 320px; */
+    width: 100%;
     font-family: arial;
     font-weight: 400;
     border: none;
@@ -67,6 +65,8 @@ const InputStyled = styled.div<InputStyledType>`
 
 const PrimaryVariant = css`
   background-color: ${theme.colors.white};
+  padding: 19px 26px;
+  width: 100%;
 
   input {
     &::placeholder {
@@ -77,6 +77,7 @@ const PrimaryVariant = css`
 
 const secondaryVariant = css`
   background-color: ${theme.colors.background_white};
+  padding: 11.75px 24px;
 
   input {
     &::placeholder {
